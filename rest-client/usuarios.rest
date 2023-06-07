@@ -1,0 +1,35 @@
+@root = {{$dotenv HOST}}
+@baseUrl = {{root}}/v3
+@api_key = {{$dotenv API_KEY}}
+
+### Bienvenida
+GET {{root}}
+
+### Modulos
+GET {{baseUrl}}/modulos
+X-Api-Key: {{api_key}}
+
+### Modulo con id 27 que es el de USUARIOS
+GET {{baseUrl}}/modulos/27
+X-Api-Key: {{api_key}}
+
+### Roles
+GET {{baseUrl}}/roles
+X-Api-Key: {{api_key}}
+
+### Rol con id 1 que es el ADMINISTRADOR
+GET {{baseUrl}}/roles/1
+X-Api-Key: {{api_key}}
+
+### Usuarios
+GET {{baseUrl}}/usuarios
+X-Api-Key: {{api_key}}
+
+### Usuarios con email gmail.com
+GET {{baseUrl}}/usuarios
+    ?email=gmail.com
+X-Api-Key: {{api_key}}
+
+### Usuario slt.mercantil.2do@pjecz.gob.mx
+GET {{baseUrl}}/usuarios/slt.mercantil.2do@pjecz.gob.mx
+X-Api-Key: {{api_key}}

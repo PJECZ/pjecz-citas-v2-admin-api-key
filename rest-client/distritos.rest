@@ -1,0 +1,29 @@
+@root = {{$dotenv HOST}}
+@baseUrl = {{root}}/v3
+@api_key = {{$dotenv API_KEY}}
+
+### Bienvenida
+GET {{root}}
+
+### Distritos
+GET {{baseUrl}}/distritos
+X-Api-Key: {{api_key}}
+
+### Distritos es_distrito_judicial
+GET {{baseUrl}}/distritos
+    ?es_distrito_judicial=true
+X-Api-Key: {{api_key}}
+
+### Distritos es_distrito
+GET {{baseUrl}}/distritos
+    ?es_distrito=true
+X-Api-Key: {{api_key}}
+
+### Distritos es_jurisdiccional
+GET {{baseUrl}}/distritos
+    ?es_jurisdiccional=true
+X-Api-Key: {{api_key}}
+
+### Distrito Torreon
+GET {{baseUrl}}/distritos/dtrc
+X-Api-Key: {{api_key}}
