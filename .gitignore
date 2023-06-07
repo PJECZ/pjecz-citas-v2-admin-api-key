@@ -1,0 +1,11 @@
+.bashrc
+.directory
+.env
+.DS_Store
+.~lock.*
+*.py[cod]
+
+__pycache__/
+
+/poetry.lock
+/.venv/

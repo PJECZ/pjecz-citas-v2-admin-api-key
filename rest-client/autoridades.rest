@@ -1,0 +1,55 @@
+@root = {{$dotenv HOST}}
+@baseUrl = {{root}}/v3
+@api_key = {{$dotenv API_KEY}}
+
+### Bienvenida
+GET {{root}}
+
+### Autoridades
+GET {{baseUrl}}/autoridades
+X-Api-Key: {{api_key}}
+
+### Autoridades del Distrito Judicial de Saltillo id 6
+GET {{baseUrl}}/autoridades
+    ?distrito_id=6
+X-Api-Key: {{api_key}}
+
+### Autoridades del Distrito Judicial de Torreon DTRC
+GET {{baseUrl}}/autoridades
+    ?distrito_clave=dtrc
+X-Api-Key: {{api_key}}
+
+### Autoridad con clave MNC-J2-CIV
+GET {{baseUrl}}/autoridades/MNC-J2-CIV
+X-Api-Key: {{api_key}}
+
+### Autoridades CEMASC
+GET {{baseUrl}}/autoridades
+    ?es_cemasc=true
+X-Api-Key: {{api_key}}
+
+### Autoridades creadoras de glosas
+GET {{baseUrl}}/autoridades
+    ?es_creador_glosas=true
+X-Api-Key: {{api_key}}
+
+### Autoridades Defensorias
+GET {{baseUrl}}/autoridades
+    ?es_defensoria=true
+X-Api-Key: {{api_key}}
+
+### Autoridades Jurisdiccionales
+GET {{baseUrl}}/autoridades
+    ?es_jurisdiccional=true
+X-Api-Key: {{api_key}}
+
+### Autoridades Jurisdiccionales sin Notarias
+GET {{baseUrl}}/autoridades
+    ?es_jurisdiccional=true
+    &es_notaria=false
+X-Api-Key: {{api_key}}
+
+### Autoridades Notarias
+GET {{baseUrl}}/autoridades
+    ?es_notaria=true
+X-Api-Key: {{api_key}}
