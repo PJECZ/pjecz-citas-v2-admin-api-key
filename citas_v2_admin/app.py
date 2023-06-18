@@ -9,6 +9,8 @@ from config.settings import get_settings
 
 from .v3.autoridades.paths import autoridades
 from .v3.bitacoras.paths import bitacoras
+from .v3.boletines.paths import boletines
+from .v3.cit_dias_inhabiles.paths import cit_dias_inhabiles
 from .v3.distritos.paths import distritos
 from .v3.domicilios.paths import domicilios
 from .v3.entradas_salidas.paths import entradas_salidas
@@ -42,6 +44,8 @@ def create_app() -> FastAPI:
     # Rutas
     app.include_router(autoridades)
     app.include_router(bitacoras)
+    app.include_router(boletines)
+    app.include_router(cit_dias_inhabiles)
     app.include_router(distritos)
     app.include_router(domicilios)
     app.include_router(entradas_salidas)
