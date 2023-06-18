@@ -30,7 +30,7 @@ def get_boletines(
         consulta = consulta.filter(Boletin.envio_programado >= envio_programado_desde)
     if envio_programado_hasta is not None:
         consulta = consulta.filter(Boletin.envio_programado <= envio_programado_hasta)
-    return consulta.filter_by(estatus="A").order_by(Boletin.id)
+    return consulta.filter_by(estatus="A").order_by(Boletin.envio_programado)
 
 
 def get_boletin(db: Session, boletin_id: int) -> Boletin:

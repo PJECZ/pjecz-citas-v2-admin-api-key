@@ -22,7 +22,7 @@ def get_cit_dias_inhabiles(
         consulta = consulta.filter(CitDiaInhabil.fecha >= fecha_desde)
     if fecha_hasta is not None:
         consulta = consulta.filter(CitDiaInhabil.fecha <= fecha_hasta)
-    return consulta.filter_by(estatus="A").order_by(CitDiaInhabil.id)
+    return consulta.filter_by(estatus="A").order_by(CitDiaInhabil.fecha)
 
 
 def get_cit_dia_inhabil(db: Session, cit_dia_inhabil_id: int) -> CitDiaInhabil:
