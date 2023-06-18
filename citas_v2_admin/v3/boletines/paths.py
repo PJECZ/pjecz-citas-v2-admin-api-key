@@ -16,7 +16,7 @@ from ..usuarios.authentications import CurrentUser
 from .crud import get_boletines, get_boletin
 from .schemas import BoletinOut, OneBoletinOut
 
-boletines = APIRouter(prefix="/v3/boletines", tags=["categoria"])
+boletines = APIRouter(prefix="/v3/boletines", tags=["boletines"])
 
 
 @boletines.get("", response_model=CustomPage[BoletinOut])

@@ -1,6 +1,8 @@
 """
 Citas Dias Inhabiles v3, rutas (paths)
 """
+from datetime import date
+
 from fastapi import APIRouter, HTTPException, status
 from fastapi_pagination.ext.sqlalchemy import paginate
 
@@ -14,19 +16,25 @@ from ..usuarios.authentications import CurrentUser
 from .crud import get_cit_dias_inhabiles, get_cit_dia_inhabil
 from .schemas import CitDiaInhabilOut, OneCitDiaInhabilOut
 
-cit_dias_inhabiles = APIRouter(prefix="/v3/cit_dias_inhabiles", tags=["categoria"])
+cit_dias_inhabiles = APIRouter(prefix="/v3/cit_dias_inhabiles", tags=["citas"])
 
 
 @cit_dias_inhabiles.get("", response_model=CustomPage[CitDiaInhabilOut])
 async def listado_cit_dias_inhabiles(
     current_user: CurrentUser,
     db: DatabaseSession,
+    fecha_desde: date = None,
+    fecha_hasta: date = None,
 ):
     """Listado de dias inhabiles"""
     if current_user.permissions.get("CIT DIAS INHABILES", 0) < Permiso.VER:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
     try:
-        resultados = get_cit_dias_inhabiles(db)
+        resultados = get_cit_dias_inhabiles(
+            db=db,
+            fecha_desde=fecha_desde,
+            fecha_hasta=fecha_hasta,
+        )
     except MyAnyError as error:
         return custom_page_success_false(error)
     return paginate(resultados)
