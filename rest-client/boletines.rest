@@ -1,0 +1,57 @@
+@root = {{$dotenv HOST}}
+@baseUrl = {{root}}/v3
+@api_key = {{$dotenv API_KEY}}
+
+### Bienvenida
+GET {{root}}
+
+### Boletines
+GET {{baseUrl}}/boletines
+X-Api-Key: {{api_key}}
+
+### Boletin con id 4
+GET {{baseUrl}}/boletines/4
+X-Api-Key: {{api_key}}
+
+### Crear un boletin
+POST {{baseUrl}}/boletines
+X-Api-Key: {{api_key}}
+Content-Type: application/json
+
+{
+    "asunto": "Boletin de prueba",
+    "contenido": {
+        "ops": [
+            {
+                "insert": "Hola mundo"
+            }
+        ]
+    },
+    "estado": "BORRADOR",
+    "envio_programado": "2023-07-15 12:00:00",
+    "puntero": 0
+}
+
+### Modificar un boletin
+PUT {{baseUrl}}/boletines/4
+X-Api-Key: {{api_key}}
+Content-Type: application/json
+
+{
+    "asunto": "Boletin de prueba modificado",
+    "contenido": {
+        "ops": [
+            {
+                "insert": "Hola mundo !!!"
+            }
+        ]
+    },
+    "estado": "PROGRAMADO",
+    "envio_programado": "2023-07-01 12:00:00",
+    "puntero": 0,
+    "termino_programado": "2023-07-31 12:00:00"
+}
+
+### Eliminar un boletin
+DELETE {{baseUrl}}/boletines/3
+X-Api-Key: {{api_key}}

@@ -41,3 +41,34 @@ def get_boletin(db: Session, boletin_id: int) -> Boletin:
     if boletin.estatus != "A":
         raise MyIsDeletedError("No es activo ese boletin, está eliminado")
     return boletin
+
+
+def create_boletin(db: Session, boletin: Boletin) -> Boletin:
+    """Crear un boletin"""
+    db.add(boletin)
+    db.commit()
+    db.refresh(boletin)
+    return boletin
+
+
+def update_boletin(db: Session, boletin_id: int, boletin_in: Boletin) -> Boletin:
+    """Actualizar un boletin"""
+    boletin = get_boletin(db, boletin_id)
+    boletin.asunto = boletin_in.asunto
+    boletin.contenido = boletin_in.contenido
+    boletin.estado = boletin_in.estado
+    boletin.envio_programado = boletin_in.envio_programado
+    boletin.puntero = boletin_in.puntero
+    boletin.termino_programado = boletin_in.termino_programado
+    db.commit()
+    db.refresh(boletin)
+    return boletin
+
+
+def delete_boletin(db: Session, boletin_id: int) -> Boletin:
+    """Eliminar un boletin"""
+    boletin = get_boletin(db, boletin_id)
+    boletin.estatus = "B"
+    db.commit()
+    db.refresh(boletin)
+    return boletin

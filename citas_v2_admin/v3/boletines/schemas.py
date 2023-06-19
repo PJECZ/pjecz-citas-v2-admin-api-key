@@ -9,16 +9,21 @@ from pydantic import BaseModel
 from lib.schemas_base import OneBaseOut
 
 
-class BoletinOut(BaseModel):
-    """Esquema para entregar boletines"""
+class BoletinIn(BaseModel):
+    """Esquema para recibir un boletin"""
 
-    id: int | None
     asunto: str | None
     contenido: Dict | None
     estado: str | None
     envio_programado: datetime | None
     puntero: int | None
     termino_programado: datetime | None
+
+
+class BoletinOut(BoletinIn):
+    """Esquema para entregar boletines"""
+
+    id: int | None
 
     class Config:
         """SQLAlchemy config"""
