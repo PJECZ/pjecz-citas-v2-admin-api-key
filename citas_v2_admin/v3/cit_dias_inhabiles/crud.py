@@ -13,13 +13,16 @@ from ...core.cit_dias_inhabiles.models import CitDiaInhabil
 
 def get_cit_dias_inhabiles(
     db: Session,
-    filtro_boleano: bool = None,
+    fecha_desde: date = None,
+    fecha_hasta: date = None,
 ) -> Any:
     """Consultar los dias inhabiles activos"""
     consulta = db.query(CitDiaInhabil)
-    if filtro_boleano is not None:
-        consulta = consulta.filter_by(filtro_boleano=filtro_boleano)
-    return consulta.filter_by(estatus="A").order_by(CitDiaInhabil.id)
+    if fecha_desde is not None:
+        consulta = consulta.filter(CitDiaInhabil.fecha >= fecha_desde)
+    if fecha_hasta is not None:
+        consulta = consulta.filter(CitDiaInhabil.fecha <= fecha_hasta)
+    return consulta.filter_by(estatus="A").order_by(CitDiaInhabil.fecha)
 
 
 def get_cit_dia_inhabil(db: Session, cit_dia_inhabil_id: int) -> CitDiaInhabil:
