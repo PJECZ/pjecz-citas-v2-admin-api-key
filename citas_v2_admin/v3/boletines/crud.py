@@ -61,7 +61,6 @@ def update_boletin(db: Session, boletin_id: int, boletin_in: Boletin) -> Boletin
     boletin.puntero = boletin_in.puntero
     boletin.termino_programado = boletin_in.termino_programado
     db.commit()
-    db.refresh(boletin)
     return boletin
 
 
@@ -70,5 +69,4 @@ def delete_boletin(db: Session, boletin_id: int) -> Boletin:
     boletin = get_boletin(db, boletin_id)
     boletin.estatus = "B"
     db.commit()
-    db.refresh(boletin)
     return boletin
