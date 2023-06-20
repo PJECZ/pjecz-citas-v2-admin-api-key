@@ -67,17 +67,17 @@ Verifique que este en True
 **Para desarrollo** hay que crear un archivo para las variables de entorno `.env`
 
     # Base de datos
-    DB_HOST=
-    DB_PORT=
-    DB_NAME=
-    DB_USER=
-    DB_PASS=
+    DB_HOST=NNN.NNN.NNN.NNN
+    DB_PORT=5432
+    DB_NAME=pjecz_citas_v2
+    DB_USER=adminpjeczcitasv2
+    DB_PASS=XXXXXXXXXXXXXXXX
 
     # CORS origins
     ORIGINS=http://localhost:3000,http://localhost:5000,http://127.0.0.1:3000,http://127.0.0.1:5000
 
     # Salt sirve para cifrar el ID con HashID
-    SALT=
+    SALT=XXXXXXXXXXXXXXXX
 
     # Huso horario
     TZ=America/Mexico_City
@@ -182,6 +182,60 @@ Ejecute `arrancar` que es un alias dentro de `.bashrc`
 Para ejecutar las pruebas arranque el servidor y ejecute
 
     python -m unittest discover tests
+
+## Contenedores
+
+Esta incluido el archivo `Dockerfile` para construir la imagen con **podman**. Va a usar el puerto **8005**.
+
+Construir la imagen
+
+```bash
+podman build -t pjecz_citas_v2_api_key .
+```
+
+Escribir el archivo `.env` con las variables de entorno
+
+```ini
+DB_HOST=NNN.NNN.NNN.NNN
+DB_PORT=5432
+DB_NAME=pjecz_plataforma_web
+DB_USER=adminpjeczplataformaweb
+DB_PASS=XXXXXXXXXXXXXXXX
+ORIGINS=*
+SALT=XXXXXXXXXXXXXXXX
+```
+
+Arrancar el contenedor donde el puerto 8005 del contenedor se dirige al puerto 7005 local
+
+```bash
+podman run --rm \
+    --name pjecz_citas_v2_api_key \
+    -p 7005:8005 \
+    --env-file .env \
+    pjecz_citas_v2_api_key
+```
+
+Arrancar el contenedor y dejar corriendo en el fondo
+
+```bash
+podman run -d \
+    --name pjecz_citas_v2_api_key \
+    -p 7005:8005 \
+    --env-file .env \
+    pjecz_citas_v2_api_key
+```
+
+Detener contenedor
+
+```bash
+podman container stop pjecz_citas_v2_api_key
+```
+
+Eliminar contenedor
+
+```bash
+podman container rm pjecz_citas_v2_api_key
+```
 
 ## Google Cloud deployment
 

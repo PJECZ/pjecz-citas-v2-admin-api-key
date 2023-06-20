@@ -1,5 +1,5 @@
 {
-  "FastAPI crud": {
+  "FastAPI CRUD": {
     "scope": "python",
     "prefix": "fcrud",
     "body": [
@@ -38,7 +38,7 @@
     ],
     "description": "Contenido para crud.py con id"
   },
-  "FastAPI crud clave": {
+  "FastAPI CRUD clave": {
     "scope": "python",
     "prefix": "fcrudclave",
     "body": [
@@ -91,5 +91,62 @@
       ""
     ],
     "description": "Contenido para crud.py con id y clave"
+  },
+  "FastAPI CRUD create": {
+    "scope": "python",
+    "prefix": "fcrudcreate",
+    "body": [
+      "def create_${1:singular}(db: Session, ${1:singular}: ${2:Clase}) -> ${2:Clase}:",
+      "\t\"\"\"Crear una ${3:descripcion}\"\"\"",
+      "\tdb.add(${1:singular})",
+      "\tdb.commit()",
+      "\tdb.refresh(${1:singular})",
+      "\treturn ${1:singular}"
+    ],
+    "description": "def create_item"
+  },
+  "FastAPI CRUD create unico": {
+    "scope": "python",
+    "prefix": "fcrudcreateunico",
+    "body": [
+      "def create_${1:singular}(db: Session, ${1:singular}: ${2:Clase}) -> ${2:Clase}:",
+      "\t\"\"\"Crear una ${3:descripcion}\"\"\"",
+      "\ttry:",
+      "\t\tget_${1:singular}_with_${4:unico}(db, ${1:singular}.${4:unico})",
+      "\texcept MyNotExistsError:",
+      "\t\tdb.add(${1:singular})",
+      "\t\tdb.commit()",
+      "\t\tdb.refresh(${1:singular})",
+      "\t\treturn ${1:singular}",
+      "\traise MyAlreadyExistsError(\"Ya existe ese ${3:descripcion}\")"
+    ],
+    "description": "def create_item unico"
+  },
+  "FastAPI CRUD update": {
+    "scope": "python",
+    "prefix": "fcrudupdate",
+    "body": [
+      "def update_${1:singular}(db: Session, ${2:singular_id}: int, ${3:singular_in}: ${4:Clase}) -> ${4:Clase}:",
+      "\t\"\"\"Actualizar una ${5:descripcion}\"\"\"",
+      "\t${1:singular} = get_${1:singular}(db, ${2:singular_id})",
+      "\t${1:singular}.columna = ${3:singular_in}.columna",
+      "\t${1:singular}.columna = ${3:singular_in}.columna",
+      "\tdb.commit()",
+      "\treturn ${1:singular}"
+    ],
+    "description": "def update_item"
+  },
+  "FastAPI CRUD delete": {
+    "scope": "python",
+    "prefix": "fcruddelete",
+    "body": [
+      "def delete_${1:singular}(db: Session, ${2:singular_id}: int) -> ${3:Clase}:",
+      "\t\"\"\"Eliminar una ${4:descripcion}\"\"\"",
+      "\t${1:singular} = get_${1:singular}(db, ${2:singular_id})",
+      "\t${1:singular}.estatus = \"B\"",
+      "\tdb.commit()",
+      "\treturn ${1:singular}"
+    ],
+    "description": "def delete_item"
   }
 }
