@@ -1,5 +1,5 @@
 """
-PJECZ Plataforma Web API Key
+PJECZ Citas V2 admin API Key
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -27,8 +27,8 @@ def create_app() -> FastAPI:
 
     # FastAPI
     app = FastAPI(
-        title="PJECZ Plataforma Web API Key",
-        description="Bienvenido a PJECZ Plataforma Web API Key. Esta API es para trabajar con los datos de Plataforma Web. Se requiere tener una api-key para usarse.",
+        title="PJECZ Citas V2 admin API Key",
+        description="Bienvenido a PJECZ Citas V2 admin API Key. Esta API es para trabajar con los datos del sistema de citas. Se requiere tener una api-key para usarse.",
     )
 
     # CORSMiddleware
@@ -63,7 +63,7 @@ def create_app() -> FastAPI:
     @app.get("/")
     async def root():
         """Mensaje de Bienvenida"""
-        return {"message": "Bienvenido a PJECZ Plataforma Web API Key. Esta API es para trabajar con los datos de Plataforma Web. Se requiere tener una api-key para usarse."}
+        return {"message": "Bienvenido a PJECZ Citas V2 admin API Key. Esta API es para trabajar con los datos del sistema de citas. Se requiere tener una api-key para usarse."}
 
     # Entregar
     return app
