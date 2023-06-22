@@ -35,6 +35,9 @@ class Oficina(Base, UniversalMixin):
     puede_enviar_qr = Column(Boolean(), nullable=False, default=False)
 
     # Hijos
+    cit_citas = relationship("CitCita", back_populates="oficina")
+    cit_horas_bloqueadas = relationship("CitHoraBloqueada", back_populates="oficina")
+    cit_oficinas_servicios = relationship("CitOficinaServicio", back_populates="oficina")
     usuarios = relationship("Usuario", back_populates="oficina")
 
     @property
