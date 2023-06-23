@@ -1,7 +1,7 @@
 {
-  "FastAPI CRUD": {
+  "FastAPI CRUD id": {
     "scope": "python",
-    "prefix": "fcrud",
+    "prefix": "fcrudid",
     "body": [
       "\"\"\"",
       "${1:Modulos} v3, CRUD (create, read, update, and delete)",
@@ -92,9 +92,9 @@
     ],
     "description": "Contenido para crud.py con id y clave"
   },
-  "FastAPI CRUD create": {
+  "FastAPI CRUD def create": {
     "scope": "python",
-    "prefix": "fcrudcreate",
+    "prefix": "fcruddefcreate",
     "body": [
       "def create_${1:singular}(db: Session, ${1:singular}: ${2:Clase}) -> ${2:Clase}:",
       "\t\"\"\"Crear una ${3:descripcion}\"\"\"",
@@ -105,9 +105,9 @@
     ],
     "description": "def create_item"
   },
-  "FastAPI CRUD create unico": {
+  "FastAPI CRUD def create unico": {
     "scope": "python",
-    "prefix": "fcrudcreateunico",
+    "prefix": "fcruddefcreateunico",
     "body": [
       "def create_${1:singular}(db: Session, ${1:singular}: ${2:Clase}) -> ${2:Clase}:",
       "\t\"\"\"Crear una ${3:descripcion}\"\"\"",
@@ -122,9 +122,9 @@
     ],
     "description": "def create_item unico"
   },
-  "FastAPI CRUD update": {
+  "FastAPI CRUD def update": {
     "scope": "python",
-    "prefix": "fcrudupdate",
+    "prefix": "fcruddefupdate",
     "body": [
       "def update_${1:singular}(db: Session, ${2:singular_id}: int, ${3:singular_in}: ${4:Clase}) -> ${4:Clase}:",
       "\t\"\"\"Actualizar una ${5:descripcion}\"\"\"",
@@ -136,9 +136,9 @@
     ],
     "description": "def update_item"
   },
-  "FastAPI CRUD delete": {
+  "FastAPI CRUD defdelete": {
     "scope": "python",
-    "prefix": "fcruddelete",
+    "prefix": "fcruddefdelete",
     "body": [
       "def delete_${1:singular}(db: Session, ${2:singular_id}: int) -> ${3:Clase}:",
       "\t\"\"\"Eliminar una ${4:descripcion}\"\"\"",

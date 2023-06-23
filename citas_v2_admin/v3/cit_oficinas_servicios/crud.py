@@ -28,7 +28,7 @@ def get_cit_oficinas_servicios(
     return consulta.filter_by(estatus="A").order_by(CitOficinaServicio.id)
 
 
-def get_oficina_servicio(db: Session, oficina_servicio_id: int) -> CitOficinaServicio:
+def get_cit_oficina_servicio(db: Session, oficina_servicio_id: int) -> CitOficinaServicio:
     """Consultar una oficina-servicio por su id"""
     oficina_servicio = db.query(CitOficinaServicio).get(oficina_servicio_id)
     if oficina_servicio is None:
