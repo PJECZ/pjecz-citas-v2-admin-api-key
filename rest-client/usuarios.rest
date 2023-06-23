@@ -9,7 +9,7 @@ GET {{root}}
 GET {{baseUrl}}/modulos
 X-Api-Key: {{api_key}}
 
-### Modulo con id 27 que es el de USUARIOS
+### Modulo con id 27
 GET {{baseUrl}}/modulos/27
 X-Api-Key: {{api_key}}
 
@@ -25,9 +25,9 @@ X-Api-Key: {{api_key}}
 GET {{baseUrl}}/usuarios
 X-Api-Key: {{api_key}}
 
-### Usuarios con email gmail.com
+### Usuarios con email coahuila.gob.mx
 GET {{baseUrl}}/usuarios
-    ?email=gmail.com
+    ?email=coahuila.gob.mx
 X-Api-Key: {{api_key}}
 
 ### Usuario slt.mercantil.2do@pjecz.gob.mx

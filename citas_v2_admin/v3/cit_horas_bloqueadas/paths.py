@@ -16,7 +16,7 @@ from ..usuarios.authentications import CurrentUser
 from .crud import get_cit_horas_bloqueadas, get_cit_hora_bloqueada
 from .schemas import CitHoraBloqueadaOut, OneCitHoraBloqueadaOut
 
-cit_horas_bloqueadas = APIRouter(prefix="/v3/cit_horas_bloqueadas", tags=["categoria"])
+cit_horas_bloqueadas = APIRouter(prefix="/v3/cit_horas_bloqueadas", tags=["citas"])
 
 
 @cit_horas_bloqueadas.get("", response_model=CustomPage[CitHoraBloqueadaOut])

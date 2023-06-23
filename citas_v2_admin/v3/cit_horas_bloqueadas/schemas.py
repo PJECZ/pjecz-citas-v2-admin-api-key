@@ -1,7 +1,7 @@
 """
 Cit Horas Bloqueadas v3, esquemas de pydantic
 """
-from datetime import date
+from datetime import date, time
 
 from pydantic import BaseModel
 

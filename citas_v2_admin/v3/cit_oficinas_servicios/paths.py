@@ -14,7 +14,7 @@ from ..usuarios.authentications import CurrentUser
 from .crud import get_cit_oficinas_servicios, get_cit_oficina_servicio
 from .schemas import CitOficinaServicioOut, OneCitOficinaServicioOut
 
-cit_oficinas_servicios = APIRouter(prefix="/v3/cit_oficinas_servicios", tags=["categoria"])
+cit_oficinas_servicios = APIRouter(prefix="/v3/cit_oficinas_servicios", tags=["citas"])
 
 
 @cit_oficinas_servicios.get("", response_model=CustomPage[CitOficinaServicioOut])
@@ -23,7 +23,7 @@ async def listado_cit_oficinas_servicios(
     db: DatabaseSession,
 ):
     """Listado de oficinas-servicios"""
-    if current_user.permissions.get("OFICINAS SERVICIOS", 0) < Permiso.VER:
+    if current_user.permissions.get("CIT OFICINAS SERVICIOS", 0) < Permiso.VER:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
     try:
         resultados = get_cit_oficinas_servicios(db)
@@ -39,7 +39,7 @@ async def detalle_cit_oficina_servicio_id(
     cit_oficina_servicio_id: int,
 ):
     """Detalle de una oficina-servicio a partir de su id"""
-    if current_user.permissions.get("OFICINAS SERVICIOS", 0) < Permiso.VER:
+    if current_user.permissions.get("CIT OFICINAS SERVICIOS", 0) < Permiso.VER:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
     try:
         cit_oficina_servicio_id = get_cit_oficina_servicio(db, cit_oficina_servicio_id)

@@ -11,9 +11,9 @@ from config.settings import Settings
 from lib.exceptions import MyIsDeletedError, MyNotExistsError, MyNotValidParamError
 from lib.safe_string import safe_email
 
+from ...core.cit_clientes.models import CitCliente
 from ...core.cit_clientes_recuperaciones.models import CitClienteRecuperacion
 from ..cit_clientes.crud import get_cit_cliente
-from ..cit_clientes.models import CitCliente
 
 
 def get_cit_clientes_recuperaciones(

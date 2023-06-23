@@ -17,7 +17,7 @@ from ..usuarios.authentications import CurrentUser
 from .crud import get_cit_clientes_recuperaciones, get_cit_cliente_recuperacion
 from .schemas import CitClienteRecuperacionOut, OneCitClienteRecuperacionOut
 
-cit_clientes_recuperaciones = APIRouter(prefix="/v3/cit_clientes_recuperaciones", tags=["categoria"])
+cit_clientes_recuperaciones = APIRouter(prefix="/v3/cit_clientes_recuperaciones", tags=["citas"])
 
 
 @cit_clientes_recuperaciones.get("", response_model=CustomPage[CitClienteRecuperacionOut])

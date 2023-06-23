@@ -40,13 +40,13 @@ def get_cit_clientes(
     consulta = db.query(CitCliente)
 
     # Filtrar por apellido primero
-    apellido_primero = safe_string(apellido_primero)
     if apellido_primero is not None:
+        apellido_primero = safe_string(apellido_primero)
         consulta = consulta.filter(CitCliente.apellido_primero.contains(apellido_primero))
 
     # Filtrar por apellido segundo
-    apellido_segundo = safe_string(apellido_segundo)
     if apellido_segundo is not None:
+        apellido_segundo = safe_string(apellido_segundo)
         consulta = consulta.filter(CitCliente.apellido_segundo.contains(apellido_segundo))
 
     # Filtrar por autoriza mensajes
@@ -66,13 +66,13 @@ def get_cit_clientes(
         consulta = consulta.filter(CitCliente.creado <= hasta_dt)
 
     # Filtrar por fragmento de CURP
-    curp = safe_curp(curp, search_fragment=True)
     if curp is not None:
+        curp = safe_curp(curp, search_fragment=True)
         consulta = consulta.filter(CitCliente.curp.contains(curp))
 
     # Filtrar por fragmento de email
-    email = safe_email(email, search_fragment=True)
     if email is not None:
+        email = safe_email(email, search_fragment=True)
         consulta = consulta.filter(CitCliente.email.contains(email))
 
     # Filtrar por enviar boletin
@@ -80,13 +80,13 @@ def get_cit_clientes(
         consulta = consulta.filter(CitCliente.enviar_boletin == enviar_boletin)
 
     # Filtrar por nombres
-    nombres = safe_string(nombres)
     if nombres is not None:
+        nombres = safe_string(nombres)
         consulta = consulta.filter(CitCliente.nombres.contains(nombres))
 
     # Filtrar por telefono
-    telefono = safe_telefono(telefono)
     if telefono is not None:
+        telefono = safe_telefono(telefono)
         consulta = consulta.filter(CitCliente.telefono.contains(telefono))
 
     # Filtrar por contrasena sha256

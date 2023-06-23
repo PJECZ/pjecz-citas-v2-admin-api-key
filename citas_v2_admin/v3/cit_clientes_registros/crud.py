@@ -60,18 +60,18 @@ def get_cit_clientes_registros(
         consulta = consulta.filter(CitClienteRegistro.creado <= hasta_dt)
 
     # Filtrar por fragmento de CURP
-    curp = safe_curp(curp, search_fragment=True)
     if curp is not None:
+        curp = safe_curp(curp, search_fragment=True)
         consulta = consulta.filter(CitClienteRegistro.curp.contains(curp))
 
     # Filtrar por fragmento de email
-    email = safe_email(email, search_fragment=True)
     if email is not None:
+        email = safe_email(email, search_fragment=True)
         consulta = consulta.filter(CitClienteRegistro.email.contains(email))
 
     # Filtrar por nombres
-    nombres = safe_string(nombres)
     if nombres is not None:
+        nombres = safe_string(nombres)
         consulta = consulta.filter(CitClienteRegistro.nombres.contains(nombres))
 
     # Filtrar por ya registrado

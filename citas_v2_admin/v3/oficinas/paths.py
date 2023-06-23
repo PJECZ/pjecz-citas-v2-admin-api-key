@@ -11,7 +11,7 @@ from lib.fastapi_pagination_custom_page import CustomPage, custom_page_success_f
 from ...core.permisos.models import Permiso
 from ..usuarios.authentications import CurrentUser
 
-from .crud import get_oficinas, get_oficina_with_clave
+from .crud import get_oficinas, get_oficina
 from .schemas import OficinaOut, OneOficinaOut
 
 oficinas = APIRouter(prefix="/v3/oficinas", tags=["oficinas"])
@@ -46,17 +46,17 @@ async def listado_oficinas(
     return paginate(resultados)
 
 
-@oficinas.get("/{oficina_clave}", response_model=OneOficinaOut)
+@oficinas.get("/{oficina_id}", response_model=OneOficinaOut)
 async def detalle_oficina(
     current_user: CurrentUser,
     db: DatabaseSession,
-    oficina_clave: str,
+    oficina_id: int,
 ):
     """Detalle de una oficina a partir de su clave"""
     if current_user.permissions.get("OFICINAS", 0) < Permiso.VER:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
     try:
-        oficina = get_oficina_with_clave(db, oficina_clave)
+        oficina = get_oficina(db, oficina_id)
     except MyAnyError as error:
         return OneOficinaOut(success=False, message=str(error))
     return OneOficinaOut.from_orm(oficina)

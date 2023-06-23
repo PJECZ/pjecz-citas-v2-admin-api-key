@@ -4,6 +4,7 @@ Cit Citas v3, CRUD (create, read, update, and delete)
 from datetime import date, datetime, time, timedelta
 from typing import Any
 
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 import pytz
 
