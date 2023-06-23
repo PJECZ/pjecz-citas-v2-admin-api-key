@@ -16,7 +16,7 @@
       "from ...core.permisos.models import Permiso",
       "from ..usuarios.authentications import CurrentUser",
       "",
-      "from .crud import get_${2:plural}, get_${3:singular}_with_clave",
+      "from .crud import ${9:get_plural}, ${10:get_singular_with_clave}",
       "from .schemas import ${4:EsquemaOut}, One${4:EsquemaOut}",
       "",
       "${2:plural} = APIRouter(prefix=\"/v3/${2:plural}\", tags=[\"categoria\"])",
@@ -31,7 +31,7 @@
       "\tif current_user.permissions.get(\"${8:MODULO}\", 0) < Permiso.VER:",
       "\t\traise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=\"Forbidden\")",
       "\ttry:",
-      "\t\tresultados = get_${2:plural}(db)",
+      "\t\tresultados = ${9:get_plural}(db)",
       "\texcept MyAnyError as error:",
       "\t\treturn custom_page_success_false(error)",
       "\treturn paginate(resultados)",
@@ -47,13 +47,13 @@
       "\tif current_user.permissions.get(\"${8:MODULO}\", 0) < Permiso.VER:",
       "\t\traise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=\"Forbidden\")",
       "\ttry:",
-      "\t\t${3:singular} = get_${3:singular}_with_clave(db, ${6:singular_clave})",
+      "\t\t${3:singular} = ${10:get_singular_with_clave}(db, ${6:singular_clave})",
       "\texcept MyAnyError as error:",
       "\t\treturn One${4:EsquemaOut}(success=False, message=str(error))",
       "\treturn One${4:EsquemaOut}.from_orm(${3:singular})",
       ""
     ],
-    "description": "Contenido para paths.py con clave"
+    "description": "paths.py con clave"
   },
   "FastAPI paths id": {
     "scope": "python",
@@ -72,7 +72,7 @@
       "from ...core.permisos.models import Permiso",
       "from ..usuarios.authentications import CurrentUser",
       "",
-      "from .crud import get_${2:plural}, get_${3:singular}",
+      "from .crud import ${9:get_plural}, ${10:get_singular}",
       "from .schemas import ${4:EsquemaOut}, One${4:EsquemaOut}",
       "",
       "${2:plural} = APIRouter(prefix=\"/v3/${2:plural}\", tags=[\"categoria\"])",
@@ -87,7 +87,7 @@
       "\tif current_user.permissions.get(\"${8:MODULO}\", 0) < Permiso.VER:",
       "\t\traise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=\"Forbidden\")",
       "\ttry:",
-      "\t\tresultados = get_${2:plural}(db)",
+      "\t\tresultados = ${9:get_plural}(db)",
       "\texcept MyAnyError as error:",
       "\t\treturn custom_page_success_false(error)",
       "\treturn paginate(resultados)",
@@ -103,17 +103,17 @@
       "\tif current_user.permissions.get(\"${8:MODULO}\", 0) < Permiso.VER:",
       "\t\traise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=\"Forbidden\")",
       "\ttry:",
-      "\t\t${3:singular} = get_${3:singular}(db, ${3:singular_id})",
+      "\t\t${3:singular} = ${10:get_singular}(db, ${3:singular_id})",
       "\texcept MyAnyError as error:",
       "\t\treturn One${4:EsquemaOut}(success=False, message=str(error))",
       "\treturn One${4:EsquemaOut}.from_orm(${3:singular})",
       ""
     ],
-    "description": "Contenido para paths.py con id"
+    "description": "paths.py con id"
   },
-  "FastAPI paths crear": {
+  "FastAPI paths def crear": {
     "scope": "python",
-    "prefix": "fpathscrear",
+    "prefix": "fpathsdefcrear",
     "body": [
       "@${1:plural}.post(\"\", response_model=${2:OneEsquemaOut})",
       "async def crear_${3:singular}(",
@@ -132,11 +132,11 @@
       "\trespuesta.message = \"${8:descripcion} creada correctamente\"",
       "\treturn respuesta"
     ],
-    "description": "Contenido para paths.py crear"
+    "description": "def crear"
   },
-  "FastAPI paths modificar": {
+  "FastAPI paths def modificar": {
     "scope": "python",
-    "prefix": "fpathsmodificar",
+    "prefix": "fpathsdefmodificar",
     "body": [
       "@${1:plural}.put(\"/{${2:singular_id}}\", response_model=${3:OneEsquemaOut})",
       "async def modificar_${4:singular}(",
@@ -156,11 +156,11 @@
       "\trespuesta.message = \"${9:descripcion} modificada correctamente\"",
       "\treturn respuesta"
     ],
-    "description": "Contenido para paths.py modificar"
+    "description": "def modificar"
   },
-  "FastAPI paths borrar": {
+  "FastAPI paths def borrar": {
     "scope": "python",
-    "prefix": "fpathsborrar",
+    "prefix": "fpathsdefborrar",
     "body": [
       "@${1:plural}.delete(\"/{${2:singular_id}}\", response_model=${3:OneEsquemaOut})",
       "async def borrar_${4:singular}(",
@@ -179,6 +179,6 @@
       "\trespuesta.message = \"${7:descripcion} borrada correctamente\"",
       "\treturn respuesta"
     ],
-    "description": "Contenido para paths.py borrar"
+    "description": "def borrar"
   }
 }

@@ -1,5 +1,5 @@
 """
-Citas Dias Inhabiles, modelos
+Cit Dias Inhabiles, modelos
 """
 from sqlalchemy import Column, Date, Integer, String
 

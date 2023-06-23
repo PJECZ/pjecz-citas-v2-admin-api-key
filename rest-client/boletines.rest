@@ -9,8 +9,8 @@ GET {{root}}
 GET {{baseUrl}}/boletines
 X-Api-Key: {{api_key}}
 
-### Boletin con id 4
-GET {{baseUrl}}/boletines/4
+### Boletin con id 2
+GET {{baseUrl}}/boletines/2
 X-Api-Key: {{api_key}}
 
 ### Crear un boletin

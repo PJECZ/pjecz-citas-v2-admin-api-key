@@ -11,7 +11,7 @@ from lib.fastapi_pagination_custom_page import CustomPage, custom_page_success_f
 from ...core.permisos.models import Permiso
 from ..usuarios.authentications import CurrentUser
 
-from .crud import get_distritos, get_distrito_with_clave
+from .crud import get_distritos, get_distrito
 from .schemas import DistritoOut, OneDistritoOut
 
 distritos = APIRouter(prefix="/v3/distritos", tags=["distritos"])
@@ -40,17 +40,17 @@ async def listado_distritos(
     return paginate(resultados)
 
 
-@distritos.get("/{distrito_clave}", response_model=OneDistritoOut)
+@distritos.get("/{distrito_id}", response_model=OneDistritoOut)
 async def detalle_distrito(
     current_user: CurrentUser,
     db: DatabaseSession,
-    distrito_clave: str,
+    distrito_id: int,
 ):
     """Detalle de una distrito a partir de su clave"""
     if current_user.permissions.get("DISTRITOS", 0) < Permiso.VER:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
     try:
-        distrito = get_distrito_with_clave(db, distrito_clave)
+        distrito = get_distrito(db, distrito_id)
     except MyAnyError as error:
         return OneDistritoOut(success=False, message=str(error))
     return OneDistritoOut.from_orm(distrito)

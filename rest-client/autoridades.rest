@@ -23,21 +23,6 @@ X-Api-Key: {{api_key}}
 GET {{baseUrl}}/autoridades/MNC-J2-CIV
 X-Api-Key: {{api_key}}
 
-### Autoridades CEMASC
-GET {{baseUrl}}/autoridades
-    ?es_cemasc=true
-X-Api-Key: {{api_key}}
-
-### Autoridades creadoras de glosas
-GET {{baseUrl}}/autoridades
-    ?es_creador_glosas=true
-X-Api-Key: {{api_key}}
-
-### Autoridades Defensorias
-GET {{baseUrl}}/autoridades
-    ?es_defensoria=true
-X-Api-Key: {{api_key}}
-
 ### Autoridades Jurisdiccionales
 GET {{baseUrl}}/autoridades
     ?es_jurisdiccional=true
@@ -52,4 +37,9 @@ X-Api-Key: {{api_key}}
 ### Autoridades Notarias
 GET {{baseUrl}}/autoridades
     ?es_notaria=true
+X-Api-Key: {{api_key}}
+
+### Autoridades Organos Especializados
+GET {{baseUrl}}/autoridades
+    ?es_organo_especializado=true
 X-Api-Key: {{api_key}}

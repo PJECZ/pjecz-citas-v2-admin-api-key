@@ -47,6 +47,7 @@ class Usuario(Base, UniversalMixin):
     # Hijos
     bitacoras = relationship("Bitacora", back_populates="usuario")
     entradas_salidas = relationship("EntradaSalida", back_populates="usuario")
+    usuarios_oficinas = relationship("UsuarioOficina", back_populates="usuario")
     usuarios_roles = relationship("UsuarioRol", back_populates="usuario")
 
     # Propiedades
