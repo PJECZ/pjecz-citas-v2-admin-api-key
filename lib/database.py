@@ -8,12 +8,12 @@ from sqlalchemy import Engine, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session, sessionmaker
 
-from config.settings import CurrentSettings
+from config.settings import Settings, get_settings
 
 Base = declarative_base()
 
 
-def get_engine(settings: CurrentSettings) -> Engine:
+def get_engine(settings: Annotated[Settings, Depends(get_settings)]) -> Engine:
     """Database engine"""
 
     # Create engine
@@ -22,7 +22,7 @@ def get_engine(settings: CurrentSettings) -> Engine:
     return engine
 
 
-def get_db(settings: CurrentSettings) -> Session:
+async def get_db(settings: Annotated[Settings, Depends(get_settings)]) -> Session:
     """Database session"""
 
     # Create engine
@@ -32,10 +32,7 @@ def get_db(settings: CurrentSettings) -> Session:
     session_local = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     try:
-        db = session_local()
-        yield db
+        database = session_local()
+        yield database
     finally:
-        db.close()
-
-
-DatabaseSession = Annotated[Session, Depends(get_db)]
+        database.close()

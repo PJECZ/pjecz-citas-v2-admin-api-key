@@ -1,9 +1,7 @@
 """
 Usuarios, modelos
 """
-from collections import OrderedDict
-
-from sqlalchemy import Column, DateTime, Enum, Integer, ForeignKey, String
+from sqlalchemy import Column, DateTime, Integer, ForeignKey, String
 from sqlalchemy.orm import relationship
 
 from lib.database import Base
@@ -36,8 +34,6 @@ class Usuario(Base, UniversalMixin):
     curp = Column(String(18))
     puesto = Column(String(256))
     telefono_celular = Column(String(256))
-    api_key = Column(String(128), nullable=False)
-    api_key_expiracion = Column(DateTime(), nullable=False)
 
     # Columnas que no deben ser expuestas
     api_key = Column(String(128), nullable=False)

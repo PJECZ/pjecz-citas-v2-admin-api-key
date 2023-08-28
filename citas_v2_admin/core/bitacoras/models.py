@@ -33,6 +33,11 @@ class Bitacora(Base, UniversalMixin):
         return self.modulo.nombre
 
     @property
+    def usuario_email(self):
+        """email del usuario"""
+        return self.usuario.email
+
+    @property
     def usuario_nombre(self):
         """Nombre del usuario"""
         return self.usuario.nombre
