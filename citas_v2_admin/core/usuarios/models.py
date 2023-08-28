@@ -1,7 +1,7 @@
 """
 Usuarios, modelos
 """
-from sqlalchemy import Column, DateTime, Integer, ForeignKey, String
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
 from lib.database import Base

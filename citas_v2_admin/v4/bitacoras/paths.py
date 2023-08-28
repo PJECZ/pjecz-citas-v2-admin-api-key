@@ -12,8 +12,7 @@ from lib.fastapi_pagination_custom_page import CustomPage
 
 from ...core.permisos.models import Permiso
 from ..usuarios.authentications import UsuarioInDB, get_current_active_user
-
-from .crud import get_bitacoras, get_bitacora
+from .crud import get_bitacora, get_bitacoras
 from .schemas import BitacoraOut, OneBitacoraOut
 
 bitacoras = APIRouter(prefix="/v4/bitacoras", tags=["categoria"])

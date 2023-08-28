@@ -4,8 +4,8 @@ Unit tests for distritos category
 import os
 import unittest
 
-from dotenv import load_dotenv
 import requests
+from dotenv import load_dotenv
 
 load_dotenv()
 

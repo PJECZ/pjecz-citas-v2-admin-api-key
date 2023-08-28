@@ -12,9 +12,8 @@ from lib.fastapi_pagination_custom_page import CustomPage
 
 from ...core.permisos.models import Permiso
 from ..usuarios.authentications import UsuarioInDB, get_current_active_user
-
-from .crud import get_usuarios_oficinas, get_usuario_oficina
-from .schemas import UsuarioOficinaOut, OneUsuarioOficinaOut
+from .crud import get_usuario_oficina, get_usuarios_oficinas
+from .schemas import OneUsuarioOficinaOut, UsuarioOficinaOut
 
 usuarios_oficinas = APIRouter(prefix="/v4/usuarios_oficinas", tags=["categoria"])
 

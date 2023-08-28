@@ -12,8 +12,7 @@ from lib.fastapi_pagination_custom_page import CustomPage
 
 from ...core.permisos.models import Permiso
 from ..usuarios.authentications import UsuarioInDB, get_current_active_user
-
-from .crud import get_domicilios, get_domicilio
+from .crud import get_domicilio, get_domicilios
 from .schemas import DomicilioOut, OneDomicilioOut
 
 domicilios = APIRouter(prefix="/v4/domicilios", tags=["categoria"])

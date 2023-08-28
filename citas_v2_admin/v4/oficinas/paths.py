@@ -12,8 +12,7 @@ from lib.fastapi_pagination_custom_page import CustomPage
 
 from ...core.permisos.models import Permiso
 from ..usuarios.authentications import UsuarioInDB, get_current_active_user
-
-from .crud import get_oficinas, get_oficina_with_clave
+from .crud import get_oficina_with_clave, get_oficinas
 from .schemas import OficinaOut, OneOficinaOut
 
 oficinas = APIRouter(prefix="/v4/oficinas", tags=["categoria"])

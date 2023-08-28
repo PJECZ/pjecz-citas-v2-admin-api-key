@@ -12,9 +12,8 @@ from lib.fastapi_pagination_custom_page import CustomPage
 
 from ...core.permisos.models import Permiso
 from ..usuarios.authentications import UsuarioInDB, get_current_active_user
-
-from .crud import get_roles, get_rol
-from .schemas import RolOut, OneRolOut
+from .crud import get_rol, get_roles
+from .schemas import OneRolOut, RolOut
 
 roles = APIRouter(prefix="/v4/roles", tags=["categoria"])
 
