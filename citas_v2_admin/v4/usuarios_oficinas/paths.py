@@ -15,7 +15,7 @@ from ..usuarios.authentications import UsuarioInDB, get_current_active_user
 from .crud import get_usuario_oficina, get_usuarios_oficinas
 from .schemas import OneUsuarioOficinaOut, UsuarioOficinaOut
 
-usuarios_oficinas = APIRouter(prefix="/v4/usuarios_oficinas", tags=["categoria"])
+usuarios_oficinas = APIRouter(prefix="/v4/usuarios_oficinas", tags=["oficinas"])
 
 
 @usuarios_oficinas.get("", response_model=CustomPage[UsuarioOficinaOut])

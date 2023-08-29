@@ -15,7 +15,7 @@ from ..usuarios.authentications import UsuarioInDB, get_current_active_user
 from .crud import get_modulo, get_modulos
 from .schemas import ModuloOut, OneModuloOut
 
-modulos = APIRouter(prefix="/v4/modulos", tags=["categoria"])
+modulos = APIRouter(prefix="/v4/modulos", tags=["usuarios"])
 
 
 @modulos.get("", response_model=CustomPage[ModuloOut])

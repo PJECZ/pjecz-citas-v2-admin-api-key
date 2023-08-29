@@ -15,7 +15,7 @@ from ..usuarios.authentications import UsuarioInDB, get_current_active_user
 from .crud import get_distrito_with_clave, get_distritos
 from .schemas import DistritoOut, OneDistritoOut
 
-distritos = APIRouter(prefix="/v4/distritos", tags=["categoria"])
+distritos = APIRouter(prefix="/v4/distritos", tags=["distritos"])
 
 
 @distritos.get("", response_model=CustomPage[DistritoOut])

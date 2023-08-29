@@ -38,7 +38,7 @@ import os
 from functools import lru_cache
 
 from google.cloud import secretmanager
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 PROJECT_ID = os.getenv("PROJECT_ID", "")  # Por defecto esta vacio, esto significa estamos en modo local
 SERVICE_PREFIX = os.getenv("SERVICE_PREFIX", "pjecz_citas_v2_admin_api_key")

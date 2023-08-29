@@ -15,7 +15,7 @@ from ..usuarios.authentications import UsuarioInDB, get_current_active_user
 from .crud import get_permiso, get_permisos
 from .schemas import OnePermisoOut, PermisoOut
 
-permisos = APIRouter(prefix="/v4/permisos", tags=["categoria"])
+permisos = APIRouter(prefix="/v4/permisos", tags=["usuarios"])
 
 
 @permisos.get("", response_model=CustomPage[PermisoOut])

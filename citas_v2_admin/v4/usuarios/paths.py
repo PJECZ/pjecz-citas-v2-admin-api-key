@@ -15,7 +15,7 @@ from ..usuarios.authentications import UsuarioInDB, get_current_active_user
 from .crud import get_usuario_with_email, get_usuarios
 from .schemas import OneUsuarioOut, UsuarioOut
 
-usuarios = APIRouter(prefix="/v4/usuarios", tags=["categoria"])
+usuarios = APIRouter(prefix="/v4/usuarios", tags=["usuarios"])
 
 
 @usuarios.get("", response_model=CustomPage[UsuarioOut])

@@ -15,7 +15,7 @@ from ..usuarios.authentications import UsuarioInDB, get_current_active_user
 from .crud import get_entrada_salida, get_entradas_salidas
 from .schemas import EntradaSalidaOut, OneEntradaSalidaOut
 
-entradas_salidas = APIRouter(prefix="/v4/entradas_salidas", tags=["categoria"])
+entradas_salidas = APIRouter(prefix="/v4/entradas_salidas", tags=["usuarios"])
 
 
 @entradas_salidas.get("", response_model=CustomPage[EntradaSalidaOut])

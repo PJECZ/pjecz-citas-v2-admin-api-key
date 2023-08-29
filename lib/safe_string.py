@@ -43,15 +43,22 @@ def safe_clave(input_str):
     return new_string
 
 
-def safe_curp(input_str):
+def safe_curp(input_str, search_fragment=False):
     """Safe CURP"""
     if not isinstance(input_str, str):
-        raise ValueError("CURP no es texto")
+        return ValueError
+    input_str = input_str.strip()
+    if input_str == "":
+        return ValueError
     removed_spaces = re.sub(r"\s", "", input_str)
     removed_simbols = re.sub(r"[()\[\]:/.-]+", "", removed_spaces)
     final = unidecode(removed_simbols.upper())
+    if search_fragment:
+        if re.match(r"^[A-Z\d]+$", final) is None:
+            return ValueError
+        return final
     if re.fullmatch(CURP_REGEXP, final) is None:
-        raise ValueError("CURP es incorrecto")
+        return ValueError
     return final
 
 

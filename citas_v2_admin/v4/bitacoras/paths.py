@@ -15,7 +15,7 @@ from ..usuarios.authentications import UsuarioInDB, get_current_active_user
 from .crud import get_bitacora, get_bitacoras
 from .schemas import BitacoraOut, OneBitacoraOut
 
-bitacoras = APIRouter(prefix="/v4/bitacoras", tags=["categoria"])
+bitacoras = APIRouter(prefix="/v4/bitacoras", tags=["usuarios"])
 
 
 @bitacoras.get("", response_model=CustomPage[BitacoraOut])

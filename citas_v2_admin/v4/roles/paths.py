@@ -15,7 +15,7 @@ from ..usuarios.authentications import UsuarioInDB, get_current_active_user
 from .crud import get_rol, get_roles
 from .schemas import OneRolOut, RolOut
 
-roles = APIRouter(prefix="/v4/roles", tags=["categoria"])
+roles = APIRouter(prefix="/v4/roles", tags=["usuarios"])
 
 
 @roles.get("", response_model=CustomPage[RolOut])
