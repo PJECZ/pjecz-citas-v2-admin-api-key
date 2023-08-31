@@ -9,25 +9,25 @@ from sqlalchemy.orm import Session
 from lib.exceptions import MyIsDeletedError, MyNotExistsError
 
 from ...core.cit_horas_bloqueadas.models import CitHoraBloqueada
-from ..oficinas.crud import get_oficina, get_oficina_with_clave
+from ..oficinas.crud import get_oficina
 
 
 def get_cit_horas_bloqueadas(
     database: Session,
-    fecha: date = None,
-    oficina_id: int = None,
-    oficina_clave: str = None,
+    fecha: date,
+    oficina_id: int,
 ) -> Any:
     """Consultar las horas bloqueadas activas"""
     consulta = database.query(CitHoraBloqueada)
-    if fecha is not None:
-        consulta = consulta.filter_by(fecha=fecha)
-    if oficina_id is not None:
-        oficina = get_oficina(database, oficina_id)
-        consulta = consulta.filter_by(oficina=oficina)
-    elif oficina_clave is not None:
-        oficina = get_oficina_with_clave(database, oficina_clave)
-        consulta = consulta.filter_by(oficina=oficina)
+
+    # Filtrar por fecha
+    consulta = consulta.filter_by(fecha=fecha)
+
+    # Filtrar por oficina
+    oficina = get_oficina(database, oficina_id)
+    consulta = consulta.filter_by(oficina=oficina)
+
+    # Entregar
     return consulta.filter_by(estatus="A").order_by(CitHoraBloqueada.id.desc())
 
 

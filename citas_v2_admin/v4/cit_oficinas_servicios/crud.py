@@ -21,18 +21,24 @@ def get_cit_oficinas_servicios(
 ) -> Any:
     """Consultar los oficinas-servicios activos"""
     consulta = database.query(CitOficinaServicio)
+
+    # Filtrar por servicio
     if cit_servicio_id is not None:
         cit_servicio = get_cit_servicio(database, cit_servicio_id)
         consulta = consulta.filter_by(cit_servicio=cit_servicio)
     elif cit_servicio_clave is not None:
         cit_servicio = get_cit_servicio_with_clave(database, cit_servicio_clave)
         consulta = consulta.filter_by(cit_servicio=cit_servicio)
+
+    # Filtrar por oficina
     if oficina_id is not None:
         oficina = get_oficina(database, oficina_id)
         consulta = consulta.filter_by(oficina=oficina)
     elif oficina_clave is not None:
         oficina = get_oficina_with_clave(database, oficina_clave)
         consulta = consulta.filter_by(oficina=oficina)
+
+    # Entregar
     return consulta.filter_by(estatus="A").order_by(CitOficinaServicio.id)
 
 

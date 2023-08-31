@@ -12,7 +12,7 @@ from ...core.cit_categorias.models import CitCategoria
 
 def get_cit_categorias(database: Session) -> Any:
     """Consultar las categorias activas"""
-    return database.query(CitCategoria).filter_by(estatus="A").order_by(CitCategoria.id)
+    return database.query(CitCategoria).filter_by(estatus="A").order_by(CitCategoria.nombre)
 
 
 def get_cit_categoria(database: Session, cit_categoria_id: int) -> CitCategoria:

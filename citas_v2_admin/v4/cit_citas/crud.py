@@ -11,6 +11,7 @@ from lib.safe_string import safe_string
 
 from ...core.cit_citas.models import CitCita
 from ..cit_clientes.crud import get_cit_cliente, get_cit_cliente_with_curp, get_cit_cliente_with_email
+from ..cit_servicios.crud import get_cit_servicio, get_cit_servicio_with_clave
 from ..oficinas.crud import get_oficina, get_oficina_with_clave
 
 
@@ -44,6 +45,14 @@ def get_cit_citas(
     elif cit_cliente_email is not None:
         cit_cliente = get_cit_cliente_with_email(database, cit_cliente_email)
         consulta = consulta.filter_by(cit_cliente_id=cit_cliente.id)
+
+    # Filtrar por servicio
+    if cit_servicio_id is not None:
+        cit_servicio = get_cit_servicio(database, cit_servicio_id)
+        consulta = consulta.filter_by(cit_servicio_id=cit_servicio.id)
+    elif cit_servicio_clave is not None:
+        cit_servicio = get_cit_servicio_with_clave(database, cit_servicio_clave)
+        consulta = consulta.filter_by(cit_servicio_id=cit_servicio.id)
 
     # Filtrar por creado
     if creado is not None:
@@ -86,7 +95,7 @@ def get_cit_citas(
         consulta = consulta.filter_by(oficina_id=oficina.id)
 
     # Entregar
-    return consulta.filter_by(estatus="A").order_by(CitCita.id)
+    return consulta.filter_by(estatus="A").order_by(CitCita.id.desc())
 
 
 def get_cit_cita(database: Session, cit_cita_id: int) -> CitCita:
