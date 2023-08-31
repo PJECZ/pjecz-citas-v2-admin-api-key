@@ -19,7 +19,7 @@ def get_cit_oficinas_servicios(
     oficina_id: int = None,
     oficina_clave: str = None,
 ) -> Any:
-    """Consultar los oficinas-servicios activos"""
+    """Consultar las oficinas-servicios activas"""
     consulta = database.query(CitOficinaServicio)
 
     # Filtrar por servicio
@@ -42,11 +42,11 @@ def get_cit_oficinas_servicios(
     return consulta.filter_by(estatus="A").order_by(CitOficinaServicio.id)
 
 
-def get_oficina_servicio(database: Session, oficina_servicio_id: int) -> CitOficinaServicio:
-    """Consultar un oficina-servicio por su id"""
+def get_cit_oficina_servicio(database: Session, oficina_servicio_id: int) -> CitOficinaServicio:
+    """Consultar una oficina-servicio por su id"""
     oficina_servicio = database.query(CitOficinaServicio).get(oficina_servicio_id)
     if oficina_servicio is None:
-        raise MyNotExistsError("No existe ese oficina-servicio")
+        raise MyNotExistsError("No existe esa oficina-servicio")
     if oficina_servicio.estatus != "A":
-        raise MyIsDeletedError("No es activo ese oficina-servicio, está eliminado")
+        raise MyIsDeletedError("No es activa esa oficina-servicio, está eliminada")
     return oficina_servicio
