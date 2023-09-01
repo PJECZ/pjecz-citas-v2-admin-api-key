@@ -70,12 +70,12 @@ def get_usuario(database: Session, usuario_id: int) -> Usuario:
 
 
 def get_usuario_with_email(database: Session, email: str) -> Usuario:
-    """Consultar un usuario por su clave"""
+    """Consultar un usuario por su e-mail"""
     try:
         email = safe_email(email)
     except ValueError as error:
         raise MyNotValidParamError(str(error)) from error
-    usuario = database.query(Usuario).filter_by(clave=email).first()
+    usuario = database.query(Usuario).filter_by(email=email).first()
     if usuario is None:
         raise MyNotExistsError("No existe ese usuario")
     if usuario.estatus != "A":

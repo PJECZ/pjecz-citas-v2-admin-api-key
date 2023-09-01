@@ -24,7 +24,7 @@ async def paginado_roles(
     database: Annotated[Session, Depends(get_db)],
 ):
     """Paginado de roles"""
-    if current_user.permissions.get("MODULO", 0) < Permiso.VER:
+    if current_user.permissions.get("ROLES", 0) < Permiso.VER:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
     try:
         resultados = get_roles(database)
@@ -40,7 +40,7 @@ async def detalle_rol(
     rol_id: int,
 ):
     """Detalle de un rol a partir de su id"""
-    if current_user.permissions.get("MODULO", 0) < Permiso.VER:
+    if current_user.permissions.get("ROLES", 0) < Permiso.VER:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
     try:
         rol = get_rol(database, rol_id)

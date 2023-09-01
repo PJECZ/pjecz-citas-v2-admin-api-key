@@ -47,13 +47,13 @@ async def paginado_boletines(
 async def detalle_boletin(
     current_user: Annotated[UsuarioInDB, Depends(get_current_active_user)],
     database: Annotated[Session, Depends(get_db)],
-    boletin: int,
+    boletin_id: int,
 ):
     """Detalle de un boletin a partir de su id"""
     if current_user.permissions.get("BOLETINES", 0) < Permiso.VER:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
     try:
-        boletin = get_boletin(database, boletin)
+        boletin = get_boletin(database, boletin_id)
     except MyAnyError as error:
         return OneBoletinOut(success=False, message=str(error))
     return OneBoletinOut.model_validate(boletin)
@@ -69,7 +69,7 @@ async def crear_boletin(
     if current_user.permissions.get("BOLETINES", 0) < Permiso.CREAR:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
     try:
-        boletin = create_boletin(database, Boletin(**boletin_in.dict()))
+        boletin = create_boletin(database, Boletin(**boletin_in.model_dump()))
     except MyAnyError as error:
         return OneBoletinOut(success=False, message=str(error))
     respuesta = OneBoletinOut.model_validate(boletin)
@@ -88,7 +88,7 @@ async def modificar_boletin(
     if current_user.permissions.get("BOLETINES", 0) < Permiso.MODIFICAR:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
     try:
-        boletin = update_boletin(database, boletin_id, Boletin(**boletin_in.dict()))
+        boletin = update_boletin(database, boletin_id, Boletin(**boletin_in.model_dump()))
     except MyAnyError as error:
         return OneBoletinOut(success=False, message=str(error))
     respuesta = OneBoletinOut.model_validate(boletin)

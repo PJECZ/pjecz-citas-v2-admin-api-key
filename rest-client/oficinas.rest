@@ -1,5 +1,5 @@
 @root = {{$dotenv HOST}}
-@baseUrl = {{root}}/v3
+@baseUrl = {{root}}/v4
 @api_key = {{$dotenv API_KEY}}
 
 ### Bienvenida
@@ -10,7 +10,7 @@ GET {{baseUrl}}/domicilios
     ?offset=10
 X-Api-Key: {{api_key}}
 
-### Domicilio con id 18 MERCANTILES
+### Domicilio con id 18
 GET {{baseUrl}}/domicilios/18
 X-Api-Key: {{api_key}}
 
@@ -18,7 +18,11 @@ X-Api-Key: {{api_key}}
 GET {{baseUrl}}/oficinas
 X-Api-Key: {{api_key}}
 
-### Oficinas en MERCANTILES
+### Oficina con clave MNC-J1-CIV
+GET {{baseUrl}}/oficinas/MNC-J1-CIV
+X-Api-Key: {{api_key}}
+
+### Oficinas en domicilio con id 18
 GET {{baseUrl}}/oficinas
     ?domicilio_id=18
 X-Api-Key: {{api_key}}

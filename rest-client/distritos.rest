@@ -1,5 +1,5 @@
 @root = {{$dotenv HOST}}
-@baseUrl = {{root}}/v3
+@baseUrl = {{root}}/v4
 @api_key = {{$dotenv API_KEY}}
 
 ### Bienvenida
