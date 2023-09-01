@@ -151,11 +151,11 @@
       "\tif current_user.permissions.get(\"${8:MODULO}\", 0) < Permiso.MODIFICAR:",
       "\t\traise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=\"Forbidden\")",
       "\ttry:",
-      "\t\t${4:singular} = update_${4:singular}(database, ${2:singular}_id, ${8:Modelo}(**${5:singular}_in.dict()))",
+      "\t\t${4:singular} = update_${4:singular}(database, ${2:singular}_id, ${9:Modelo}(**${5:singular}_in.dict()))",
       "\texcept MyAnyError as error:",
       "\t\treturn ${3:OneEsquemaOut}(success=False, message=str(error))",
       "\trespuesta = ${3:OneEsquemaOut}.model_validate(${4:singular})",
-      "\trespuesta.message = \"${9:descripcion} modificada correctamente\"",
+      "\trespuesta.message = \"${10:descripcion} modificada correctamente\"",
       "\treturn respuesta"
     ],
     "description": "Contenido para paths.py modificar"
