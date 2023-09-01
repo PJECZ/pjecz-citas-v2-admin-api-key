@@ -2,7 +2,7 @@
 Cit Dias Disponibles v4, CRUD (create, read, update, and delete)
 """
 from datetime import date, timedelta
-from typing import Any
+from typing import List
 
 from sqlalchemy.orm import Session
 
@@ -14,7 +14,7 @@ QUITAR_PRIMER_DIA_DESPUES_HORAS = 14
 def get_cit_dias_disponibles(
     database: Session,
     size: int = 100,
-) -> Any:
+) -> List[date]:
     """Consultar los dias disponibles, entrega un listado de fechas"""
 
     # El dia de hoy
@@ -49,7 +49,7 @@ def get_cit_dias_disponibles(
     listado = []
     for fecha in dias_disponibles:
         listado.append(fecha)
-        if len(listado) == size:
+        if len(listado) >= size:
             break
 
     # Entregar

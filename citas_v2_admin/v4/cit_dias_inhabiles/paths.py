@@ -13,7 +13,7 @@ from lib.fastapi_pagination_custom_page import CustomPage
 
 from ...core.permisos.models import Permiso
 from ..usuarios.authentications import UsuarioInDB, get_current_active_user
-from .crud import get_cit_dia_inhabil, get_cit_dias_inhabiles
+from .crud import get_cit_dia_inhabil_with_fecha, get_cit_dias_inhabiles
 from .schemas import CitDiaInhabilOut, OneCitDiaInhabilOut
 
 cit_dias_inhabiles = APIRouter(prefix="/v4/cit_dias_inhabiles", tags=["categoria"])
@@ -40,17 +40,17 @@ async def paginado_cit_dias_inhabiles(
     return paginate(resultados)
 
 
-@cit_dias_inhabiles.get("/{cit_dia_inhabil_id}", response_model=OneCitDiaInhabilOut)
+@cit_dias_inhabiles.get("/{fecha}", response_model=OneCitDiaInhabilOut)
 async def detalle_cit_dia_inhabil(
     current_user: Annotated[UsuarioInDB, Depends(get_current_active_user)],
     database: Annotated[Session, Depends(get_db)],
-    cit_dia_inhabil_id: int,
+    fecha: date,
 ):
     """Detalle de una dia inhabil a partir de su id"""
     if current_user.permissions.get("CIT DIAS INHABILES", 0) < Permiso.VER:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
     try:
-        cit_dia_inhabil = get_cit_dia_inhabil(database, cit_dia_inhabil_id)
+        cit_dia_inhabil = get_cit_dia_inhabil_with_fecha(database, fecha)
     except MyAnyError as error:
         return OneCitDiaInhabilOut(success=False, message=str(error))
     return OneCitDiaInhabilOut.model_validate(cit_dia_inhabil)

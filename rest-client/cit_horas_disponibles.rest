@@ -1,0 +1,13 @@
+@root = {{$dotenv HOST}}
+@baseUrl = {{root}}/v4
+@api_key = {{$dotenv API_KEY}}
+
+### Bienvenida
+GET {{root}}
+
+### Cit Horas Disponibles del servicio id 8 en la oficina id 117 para el 04/09/2023
+GET {{baseUrl}}/cit_horas_disponibles
+    ?cit_servicio_id=8
+    &fecha=2023-09-04
+    &oficina_id=117
+X-Api-Key: {{api_key}}

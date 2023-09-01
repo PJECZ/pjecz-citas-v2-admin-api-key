@@ -11,8 +11,8 @@ from lib.schemas_base import OneBaseOut
 class CitDiaInhabilIn(BaseModel):
     """Esquema para recibir un dia inhabil"""
 
-    fecha: date
-    descripcion: str
+    fecha: date | None = None
+    descripcion: str | None = None
 
 
 class CitDiaInhabilOut(CitDiaInhabilIn):

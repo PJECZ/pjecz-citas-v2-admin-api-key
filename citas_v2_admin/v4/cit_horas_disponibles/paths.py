@@ -9,7 +9,7 @@ from fastapi_pagination.ext.sqlalchemy import paginate
 
 from lib.database import Session, get_db
 from lib.exceptions import MyAnyError
-from lib.fastapi_pagination_custom_page import CustomPage
+from lib.fastapi_pagination_custom_list import CustomList
 
 from ...core.permisos.models import Permiso
 from ..usuarios.authentications import UsuarioInDB, get_current_active_user
@@ -19,7 +19,7 @@ from .schemas import CitHoraDisponibleOut
 cit_horas_disponibles = APIRouter(prefix="/v4/cit_horas_disponibles", tags=["categoria"])
 
 
-@cit_horas_disponibles.get("", response_model=CustomPage[CitHoraDisponibleOut])
+@cit_horas_disponibles.get("", response_model=CustomList[CitHoraDisponibleOut])
 async def paginado_cit_horas_disponibles(
     current_user: Annotated[UsuarioInDB, Depends(get_current_active_user)],
     database: Annotated[Session, Depends(get_db)],
@@ -28,8 +28,8 @@ async def paginado_cit_horas_disponibles(
     oficina_id: int,
     size: int = 100,
 ):
-    """Paginado de horas disponibles"""
-    if current_user.permissions.get("CIT HORAS DISPONIBLES", 0) < Permiso.VER:
+    """Listado de horas disponibles"""
+    if current_user.permissions.get("CIT HORAS BLOQUEADAS", 0) < Permiso.VER:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
     try:
         resultados = get_cit_horas_disponibles(
@@ -40,5 +40,6 @@ async def paginado_cit_horas_disponibles(
             size=size,
         )
     except MyAnyError as error:
-        return CustomPage(success=False, message=str(error))
-    return paginate(resultados)
+        return CustomList(success=False, message=str(error))
+    lista = [CitHoraDisponibleOut(horas_minutos=item) for item in resultados]
+    return CustomList(items=lista, message="Success", success=True, total=len(lista), page=1, size=size, pages=1)

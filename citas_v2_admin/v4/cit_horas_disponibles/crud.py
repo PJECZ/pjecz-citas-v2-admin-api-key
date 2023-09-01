@@ -1,8 +1,8 @@
 """
 Cit Horas Disponibles v4, CRUD (create, read, update, and delete)
 """
-from datetime import date, datetime, timedelta
-from typing import Any
+from datetime import date, datetime, time, timedelta
+from typing import List
 
 from sqlalchemy.orm import Session
 
@@ -21,7 +21,7 @@ def get_cit_horas_disponibles(
     fecha: date,
     oficina_id: int,
     size: int = 100,
-) -> Any:
+) -> List[time]:
     """Consultar los horas disponibles activos"""
 
     # Consultar la oficina

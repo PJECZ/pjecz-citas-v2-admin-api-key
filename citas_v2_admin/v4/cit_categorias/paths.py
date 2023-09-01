@@ -37,13 +37,13 @@ async def paginado_cit_categorias(
 async def detalle_cit_categoria(
     current_user: Annotated[UsuarioInDB, Depends(get_current_active_user)],
     database: Annotated[Session, Depends(get_db)],
-    cit_categoria: int,
+    cit_categoria_id: int,
 ):
     """Detalle de una categoria a partir de su id"""
     if current_user.permissions.get("CIT CATEGORIAS", 0) < Permiso.VER:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
     try:
-        cit_categoria = get_cit_categoria(database, cit_categoria)
+        cit_categoria = get_cit_categoria(database, cit_categoria_id)
     except MyAnyError as error:
         return OneCitCategoriaOut(success=False, message=str(error))
     return OneCitCategoriaOut.model_validate(cit_categoria)

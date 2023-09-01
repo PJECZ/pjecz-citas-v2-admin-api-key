@@ -1,5 +1,5 @@
 @root = {{$dotenv HOST}}
-@baseUrl = {{root}}/v3
+@baseUrl = {{root}}/v4
 @api_key = {{$dotenv API_KEY}}
 
 ### Bienvenida
@@ -7,7 +7,7 @@ GET {{root}}
 
 ### Dias disponibles
 GET {{baseUrl}}/cit_dias_disponibles
-    ?limit=5
+    ?size=6
 X-Api-Key: {{api_key}}
 
 ### Siguiente dia disponible
