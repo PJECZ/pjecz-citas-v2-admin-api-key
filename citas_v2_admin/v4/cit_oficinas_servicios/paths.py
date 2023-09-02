@@ -15,7 +15,7 @@ from ..usuarios.authentications import UsuarioInDB, get_current_active_user
 from .crud import get_cit_oficina_servicio, get_cit_oficinas_servicios
 from .schemas import CitOficinaServicioOut, OneCitOficinaServicioOut
 
-cit_oficinas_servicios = APIRouter(prefix="/v4/cit_oficinas_servicios", tags=["categoria"])
+cit_oficinas_servicios = APIRouter(prefix="/v4/cit_oficinas_servicios", tags=["citas"])
 
 
 @cit_oficinas_servicios.get("", response_model=CustomPage[CitOficinaServicioOut])

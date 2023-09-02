@@ -16,7 +16,7 @@ from ..usuarios.authentications import UsuarioInDB, get_current_active_user
 from .crud import get_cit_cita, get_cit_citas
 from .schemas import CitCitaOut, OneCitCitaOut
 
-cit_citas = APIRouter(prefix="/v4/cit_citas", tags=["categoria"])
+cit_citas = APIRouter(prefix="/v4/cit_citas", tags=["citas"])
 
 
 @cit_citas.get("", response_model=CustomPage[CitCitaOut])

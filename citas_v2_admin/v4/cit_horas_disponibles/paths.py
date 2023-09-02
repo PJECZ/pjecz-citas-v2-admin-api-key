@@ -16,7 +16,7 @@ from ..usuarios.authentications import UsuarioInDB, get_current_active_user
 from .crud import get_cit_horas_disponibles
 from .schemas import CitHoraDisponibleOut
 
-cit_horas_disponibles = APIRouter(prefix="/v4/cit_horas_disponibles", tags=["categoria"])
+cit_horas_disponibles = APIRouter(prefix="/v4/cit_horas_disponibles", tags=["citas"])
 
 
 @cit_horas_disponibles.get("", response_model=CustomList[CitHoraDisponibleOut])

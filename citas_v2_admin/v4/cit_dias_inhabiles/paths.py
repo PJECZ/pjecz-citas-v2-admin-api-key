@@ -17,7 +17,7 @@ from ..usuarios.authentications import UsuarioInDB, get_current_active_user
 from .crud import create_cit_dia_inhabil, delete_cit_dia_inhabil, get_cit_dia_inhabil_with_fecha, get_cit_dias_inhabiles, update_cit_dia_inhabil
 from .schemas import CitDiaInhabilIn, CitDiaInhabilOut, OneCitDiaInhabilOut
 
-cit_dias_inhabiles = APIRouter(prefix="/v4/cit_dias_inhabiles", tags=["categoria"])
+cit_dias_inhabiles = APIRouter(prefix="/v4/cit_dias_inhabiles", tags=["citas"])
 
 
 @cit_dias_inhabiles.get("", response_model=CustomPage[CitDiaInhabilOut])

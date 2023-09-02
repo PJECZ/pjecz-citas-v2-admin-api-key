@@ -14,7 +14,7 @@ from ..usuarios.authentications import UsuarioInDB, get_current_active_user
 from .crud import get_cit_dia_disponible, get_cit_dias_disponibles
 from .schemas import CitDiaDisponibleOut, OneCitDiaDisponibleOut
 
-cit_dias_disponibles = APIRouter(prefix="/v4/cit_dias_disponibles", tags=["categoria"])
+cit_dias_disponibles = APIRouter(prefix="/v4/cit_dias_disponibles", tags=["citas"])
 
 
 @cit_dias_disponibles.get("", response_model=CustomList[CitDiaDisponibleOut])

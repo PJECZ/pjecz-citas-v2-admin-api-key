@@ -15,7 +15,7 @@ from ..usuarios.authentications import UsuarioInDB, get_current_active_user
 from .crud import get_cit_cliente_registro, get_cit_clientes_registros
 from .schemas import CitClienteRegistroOut, OneCitClienteRegistroOut
 
-cit_clientes_registros = APIRouter(prefix="/v4/cit_clientes_registros", tags=["categoria"])
+cit_clientes_registros = APIRouter(prefix="/v4/cit_clientes_registros", tags=["citas"])
 
 
 @cit_clientes_registros.get("", response_model=CustomPage[CitClienteRegistroOut])

@@ -15,7 +15,7 @@ from ..usuarios.authentications import UsuarioInDB, get_current_active_user
 from .crud import get_materia_with_clave, get_materias
 from .schemas import MateriaOut, OneMateriaOut
 
-materias = APIRouter(prefix="/v4/materias", tags=["categoria"])
+materias = APIRouter(prefix="/v4/materias", tags=["citas"])
 
 
 @materias.get("", response_model=CustomPage[MateriaOut])
