@@ -43,3 +43,28 @@ def get_cit_dia_inhabil_with_fecha(database: Session, fecha: date) -> CitDiaInha
     if cit_dia_inhabil.estatus != "A":
         raise MyIsDeletedError("No es activo ese dia inhabil, está eliminado")
     return cit_dia_inhabil
+
+
+def create_cit_dia_inhabil(database: Session, cit_dia_inhabil: CitDiaInhabil) -> CitDiaInhabil:
+    """Crear un dia inhabil"""
+    database.add(cit_dia_inhabil)
+    database.commit()
+    database.refresh(cit_dia_inhabil)
+    return cit_dia_inhabil
+
+
+def update_cit_dia_inhabil(database: Session, cit_dia_inhabil_id: int, cit_dia_inhabil_in: CitDiaInhabil) -> CitDiaInhabil:
+    """Actualizar un dia inhabil"""
+    cit_dia_inhabil = get_cit_dia_inhabil(database, cit_dia_inhabil_id)
+    cit_dia_inhabil.columna = cit_dia_inhabil_in.columna
+    cit_dia_inhabil.columna = cit_dia_inhabil_in.columna
+    database.commit()
+    return cit_dia_inhabil
+
+
+def delete_cit_dia_inhabil(database: Session, cit_dia_inhabil_id: int) -> CitDiaInhabil:
+    """Eliminar un dia inhabil"""
+    cit_dia_inhabil = get_cit_dia_inhabil(database, cit_dia_inhabil_id)
+    cit_dia_inhabil.estatus = "B"
+    database.commit()
+    return cit_dia_inhabil
