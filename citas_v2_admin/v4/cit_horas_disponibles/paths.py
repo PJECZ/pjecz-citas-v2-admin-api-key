@@ -5,7 +5,6 @@ from datetime import date
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi_pagination.ext.sqlalchemy import paginate
 
 from lib.database import Session, get_db
 from lib.exceptions import MyAnyError
