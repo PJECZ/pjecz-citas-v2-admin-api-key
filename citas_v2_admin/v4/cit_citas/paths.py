@@ -14,8 +14,8 @@ from lib.fastapi_pagination_custom_page import CustomPage
 
 from ...core.permisos.models import Permiso
 from ..usuarios.authentications import UsuarioInDB, get_current_active_user
-from .crud import get_cit_cita, get_cit_citas, get_cit_citas_creados_por_dia
-from .schemas import CitCitaOut, CitCitasCreadosPorDiaOut, OneCitCitaOut
+from .crud import get_cit_cita, get_cit_citas, get_cit_citas_agendadas_por_servicio_oficina, get_cit_citas_creados_por_dia, get_cit_citas_creados_por_dia_distrito
+from .schemas import CitCitaOut, CitCitasAgendadasPorServicioOficinaOut, CitCitasCreadosPorDiaDistritoOut, CitCitasCreadosPorDiaOut, OneCitCitaOut
 
 cit_citas = APIRouter(prefix="/v4/cit_citas", tags=["citas"])
 
@@ -65,8 +65,36 @@ async def paginado_cit_citas(
     return paginate(resultados)
 
 
+@cit_citas.get("/cit_citas_agendadas_por_servicio_oficina", response_model=CustomList[CitCitasAgendadasPorServicioOficinaOut])
+async def listado_cit_citas_agendadas_por_servicio_oficina(
+    current_user: Annotated[UsuarioInDB, Depends(get_current_active_user)],
+    database: Annotated[Session, Depends(get_db)],
+    inicio: date = None,
+    inicio_desde: date = None,
+    inicio_hasta: date = None,
+    size: int = 100,
+):
+    """Listado de servicios y oficinas con cantidades de citas agendadas"""
+    if current_user.permissions.get("CIT CITAS", 0) < Permiso.VER:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
+    try:
+        resultados = get_cit_citas_agendadas_por_servicio_oficina(
+            database=database,
+            inicio=inicio,
+            inicio_desde=inicio_desde,
+            inicio_hasta=inicio_hasta,
+            size=size,
+        )
+    except MyAnyError as error:
+        return CustomList(success=False, message=str(error))
+    lista = []
+    for item in resultados:
+        CitCitasAgendadasPorServicioOficinaOut(oficina=item.oficina, servicio=item.servicio, cantidad=item.cantidad)
+    return CustomList(items=lista, message="Success", success=True, total=len(lista), page=1, size=size, pages=1)
+
+
 @cit_citas.get("/creados_por_dia", response_model=CustomList[CitCitasCreadosPorDiaOut])
-async def listado_cit_clientes_registros_creados_por_dia(
+async def listado_cit_citas_creados_por_dia(
     current_user: Annotated[UsuarioInDB, Depends(get_current_active_user)],
     database: Annotated[Session, Depends(get_db)],
     creado: date = None,
@@ -74,7 +102,7 @@ async def listado_cit_clientes_registros_creados_por_dia(
     creado_hasta: date = None,
     size: int = 100,
 ):
-    """Listado de fechas y cantidades de registros de clientes creados por dia"""
+    """Listado de fechas y cantidades de citas creadas por dia"""
     if current_user.permissions.get("CIT CITAS", 0) < Permiso.VER:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
     try:
@@ -87,7 +115,37 @@ async def listado_cit_clientes_registros_creados_por_dia(
         )
     except MyAnyError as error:
         return CustomList(success=False, message=str(error))
-    lista = [CitCitasCreadosPorDiaOut(creado=item.creado, cantidad=item.cantidad) for item in resultados]
+    lista = []
+    for item in resultados:
+        CitCitasCreadosPorDiaOut(creado=item.creado, cantidad=item.cantidad)
+    return CustomList(items=lista, message="Success", success=True, total=len(lista), page=1, size=size, pages=1)
+
+
+@cit_citas.get("/cit_citas_creados_por_dia_distrito", response_model=CustomList[CitCitasCreadosPorDiaDistritoOut])
+async def listado_cit_citas_creados_por_dia_distrito(
+    current_user: Annotated[UsuarioInDB, Depends(get_current_active_user)],
+    database: Annotated[Session, Depends(get_db)],
+    creado: date = None,
+    creado_desde: date = None,
+    creado_hasta: date = None,
+    size: int = 100,
+):
+    """Listado de fechas y cantidades de citas por dia y distrito"""
+    if current_user.permissions.get("CIT CITAS", 0) < Permiso.VER:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
+    try:
+        resultados = get_cit_citas_creados_por_dia_distrito(
+            database=database,
+            creado=creado,
+            creado_desde=creado_desde,
+            creado_hasta=creado_hasta,
+            size=size,
+        )
+    except MyAnyError as error:
+        return CustomList(success=False, message=str(error))
+    lista = []
+    for item in resultados:
+        CitCitasCreadosPorDiaDistritoOut(creado=item.creado, distrito=item.distrito, cantidad=item.cantidad)
     return CustomList(items=lista, message="Success", success=True, total=len(lista), page=1, size=size, pages=1)
 
 
