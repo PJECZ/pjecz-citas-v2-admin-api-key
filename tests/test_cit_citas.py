@@ -1,5 +1,5 @@
 """
-Unit tests for the citas category
+Unit tests for the cit citas category
 """
 import unittest
 
@@ -8,13 +8,13 @@ import requests
 from tests.load_env import config
 
 
-class TestCitas(unittest.TestCase):
-    """Tests for citas category"""
+class TestCitCitas(unittest.TestCase):
+    """Tests for cit citas category"""
 
-    def test_get_cit_dias_inhabiles(self):
-        """Test GET method for cit_dias_inhabiles"""
+    def test_get_cit_citas(self):
+        """Test GET method for cit_citas"""
         response = requests.get(
-            f"{config['host']}/v4/cit_dias_inhabiles",
+            f"{config['api_base_url']}/cit_citas",
             headers={"X-Api-Key": config["api_key"]},
             timeout=config["timeout"],
         )

@@ -14,7 +14,7 @@ class TestAutoridades(unittest.TestCase):
     def test_get_autoridades(self):
         """Test GET method for autoridades"""
         response = requests.get(
-            f"{config['host']}/v4/autoridades",
+            f"{config['api_base_url']}/autoridades",
             headers={"X-Api-Key": config["api_key"]},
             timeout=config["timeout"],
         )
@@ -23,7 +23,7 @@ class TestAutoridades(unittest.TestCase):
     def test_get_autoridades_by_es_jurisdiccional(self):
         """Test GET method for autoridades by es_jurisdiccional"""
         response = requests.get(
-            f"{config['host']}/v4/autoridades",
+            f"{config['api_base_url']}/autoridades",
             headers={"X-Api-Key": config["api_key"]},
             timeout=config["timeout"],
             params={"es_jurisdiccional": 1},
@@ -31,13 +31,13 @@ class TestAutoridades(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.json()
         self.assertEqual(data["success"], True)
-        result = data["result"]
-        self.assertGreater(result["total"], 0)  # Total of es_jurisdiccional is greater than 0
+        for item in data["items"]:
+            self.assertEqual(item["es_jurisdiccional"], 1)
 
     def test_get_autoridades_by_es_organo_especializado(self):
         """Test GET method for autoridades by es_organo_especializado"""
         response = requests.get(
-            f"{config['host']}/v4/autoridades",
+            f"{config['api_base_url']}/autoridades",
             headers={"X-Api-Key": config["api_key"]},
             timeout=config["timeout"],
             params={"es_organo_especializado": 1},
@@ -45,8 +45,8 @@ class TestAutoridades(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.json()
         self.assertEqual(data["success"], True)
-        result = data["result"]
-        self.assertGreater(result["total"], 0)  # Total of es_organo_especializado is greater than 0
+        for item in data["items"]:
+            self.assertEqual(item["es_organo_especializado"], 1)
 
 
 if __name__ == "__main__":

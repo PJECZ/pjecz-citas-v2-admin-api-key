@@ -185,12 +185,17 @@ async def cancelar_cit_cita(
     current_user: Annotated[UsuarioInDB, Depends(get_current_active_user)],
     database: Annotated[Session, Depends(get_db)],
     cit_cita_id: int,
+    cit_cliente_id: int,
 ):
     """Cancelar una cita"""
     if current_user.permissions.get("CIT CITAS", 0) < Permiso.CREAR:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
     try:
-        cit_cita = cancel_cit_cita(database, cit_cita_id)
+        cit_cita = cancel_cit_cita(
+            database=database,
+            cit_cita_id=cit_cita_id,
+            cit_cliente_id=cit_cliente_id,
+        )
     except MyAnyError as error:
         return OneCitCitaOut(success=False, message=str(error))
     respuesta = OneCitCitaOut.model_validate(cit_cita)
@@ -198,7 +203,7 @@ async def cancelar_cit_cita(
     return respuesta
 
 
-@cit_citas.post("", response_model=OneCitCitaOut)
+@cit_citas.post("/crear", response_model=OneCitCitaOut)
 async def crear_cit_cita(
     current_user: Annotated[UsuarioInDB, Depends(get_current_active_user)],
     database: Annotated[Session, Depends(get_db)],

@@ -14,7 +14,7 @@ class TestBoletines(unittest.TestCase):
     def test_get_boletines(self):
         """Test GET method for boletines"""
         response = requests.get(
-            f"{config['host']}/v4/boletines",
+            f"{config['api_base_url']}/boletines",
             headers={"X-Api-Key": config["api_key"]},
             timeout=config["timeout"],
         )
@@ -22,14 +22,17 @@ class TestBoletines(unittest.TestCase):
 
     def test_get_boletines_with_estado(self):
         """Test GET method for boletines with estado BORRADOR"""
-        params = {"estado": "BORRADOR"}
         response = requests.get(
-            f"{config['host']}/v4/boletines",
+            f"{config['api_base_url']}/boletines",
             headers={"X-Api-Key": config["api_key"]},
             timeout=config["timeout"],
-            params=params,
+            params={"estado": "BORRADOR"},
         )
         self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data["success"], True)
+        for item in data["items"]:
+            self.assertEqual(item["estado"], "BORRADOR")
 
 
 if __name__ == "__main__":
