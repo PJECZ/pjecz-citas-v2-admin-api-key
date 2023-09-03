@@ -1,10 +1,11 @@
 """
 Cit Citas v4, CRUD (create, read, update, and delete)
 """
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from typing import Any
 
 from sqlalchemy.orm import Session
+from sqlalchemy.sql.functions import count, func
 
 from lib.exceptions import MyIsDeletedError, MyNotExistsError, MyNotValidParamError
 from lib.safe_string import safe_string
@@ -106,3 +107,39 @@ def get_cit_cita(database: Session, cit_cita_id: int) -> CitCita:
     if cit_cita.estatus != "A":
         raise MyIsDeletedError("No es activo ese cita, está eliminado")
     return cit_cita
+
+
+def get_cit_citas_creados_por_dia(
+    database: Session,
+    creado: date = None,
+    creado_desde: date = None,
+    creado_hasta: date = None,
+    size: int = 100,
+) -> Any:
+    """Consultar las cantidades de citas creadas por dia"""
+
+    # Observe que para la columna `creado` se usa la función func.date()
+    consulta = database.query(
+        func.date(CitCita.creado).label("creado"),
+        count(CitCita.id).label("cantidad"),
+    )
+
+    # Si no vienen creado, creado_desde, creado_hasta, se usa el size como cantidad de dias
+    if creado is None and creado_desde is None and creado_hasta is None:
+        hoy = date.today()
+        creado_desde = hoy - timedelta(days=size)
+        creado_hasta = hoy
+    elif creado is not None:
+        desde_dt = datetime(year=creado.year, month=creado.month, day=creado.day, hour=0, minute=0, second=0)
+        hasta_dt = datetime(year=creado.year, month=creado.month, day=creado.day, hour=23, minute=59, second=59)
+        consulta = consulta.filter(CitCita.creado >= desde_dt).filter(CitCita.creado <= hasta_dt)
+    else:
+        if creado_desde is not None:
+            desde_dt = datetime(year=creado_desde.year, month=creado_desde.month, day=creado_desde.day, hour=0, minute=0, second=0)
+            consulta = consulta.filter(CitCita.creado >= desde_dt)
+        if creado_hasta is not None:
+            hasta_dt = datetime(year=creado_hasta.year, month=creado_hasta.month, day=creado_hasta.day, hour=23, minute=59, second=59)
+            consulta = consulta.filter(CitCita.creado <= hasta_dt)
+
+    # Agrupar por creado y entregar
+    return consulta.group_by(func.date(CitCita.creado))

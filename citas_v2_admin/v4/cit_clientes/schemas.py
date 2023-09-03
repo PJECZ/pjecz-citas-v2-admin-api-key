@@ -37,7 +37,7 @@ class OneCitClienteOut(CitClienteOut, OneBaseOut):
     """Esquema para entregar un cliente"""
 
 
-class CitClienteCreadosPorDiaOut(BaseModel):
+class CitClientesCreadosPorDiaOut(BaseModel):
     """Esquema para entregar cantidades de clientes creados por dia"""
 
     creado: date | None = None
