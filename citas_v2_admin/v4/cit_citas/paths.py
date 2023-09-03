@@ -14,8 +14,23 @@ from lib.fastapi_pagination_custom_page import CustomPage
 
 from ...core.permisos.models import Permiso
 from ..usuarios.authentications import UsuarioInDB, get_current_active_user
-from .crud import get_cit_cita, get_cit_citas, get_cit_citas_agendadas_por_servicio_oficina, get_cit_citas_creados_por_dia, get_cit_citas_creados_por_dia_distrito
-from .schemas import CitCitaOut, CitCitasAgendadasPorServicioOficinaOut, CitCitasCreadosPorDiaDistritoOut, CitCitasCreadosPorDiaOut, OneCitCitaOut
+from .crud import (
+    cancel_cit_cita,
+    create_cit_cita,
+    get_cit_cita,
+    get_cit_citas,
+    get_cit_citas_agendadas_por_servicio_oficina,
+    get_cit_citas_creados_por_dia,
+    get_cit_citas_creados_por_dia_distrito,
+)
+from .schemas import (
+    CitCitaIn,
+    CitCitaOut,
+    CitCitasAgendadasPorServicioOficinaOut,
+    CitCitasCreadosPorDiaDistritoOut,
+    CitCitasCreadosPorDiaOut,
+    OneCitCitaOut,
+)
 
 cit_citas = APIRouter(prefix="/v4/cit_citas", tags=["citas"])
 
@@ -163,3 +178,47 @@ async def detalle_cit_cita(
     except MyAnyError as error:
         return OneCitCitaOut(success=False, message=str(error))
     return OneCitCitaOut.model_validate(cit_cita)
+
+
+@cit_citas.put("/cancelar/{cit_cita_id}", response_model=OneCitCitaOut)
+async def cancelar_cit_cita(
+    current_user: Annotated[UsuarioInDB, Depends(get_current_active_user)],
+    database: Annotated[Session, Depends(get_db)],
+    cit_cita_id: int,
+):
+    """Cancelar una cita"""
+    if current_user.permissions.get("CIT CITAS", 0) < Permiso.CREAR:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
+    try:
+        cit_cita = cancel_cit_cita(database, cit_cita_id)
+    except MyAnyError as error:
+        return OneCitCitaOut(success=False, message=str(error))
+    respuesta = OneCitCitaOut.model_validate(cit_cita)
+    respuesta.message = "Cita cancelada correctamente"
+    return respuesta
+
+
+@cit_citas.post("", response_model=OneCitCitaOut)
+async def crear_cit_cita(
+    current_user: Annotated[UsuarioInDB, Depends(get_current_active_user)],
+    database: Annotated[Session, Depends(get_db)],
+    cit_cita_in: CitCitaIn,
+):
+    """Crear una cita"""
+    if current_user.permissions.get("CIT CITAS", 0) < Permiso.CREAR:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
+    try:
+        cit_cita = create_cit_cita(
+            database=database,
+            cit_cliente_id=cit_cita_in.cit_cliente_id,
+            cit_servicio_id=cit_cita_in.cit_servicio_id,
+            fecha=cit_cita_in.fecha,
+            hora_minuto=cit_cita_in.hora_minuto,
+            oficina_id=cit_cita_in.oficina_id,
+            notas=cit_cita_in.notas,
+        )
+    except MyAnyError as error:
+        return OneCitCitaOut(success=False, message=str(error))
+    respuesta = OneCitCitaOut.model_validate(cit_cita)
+    respuesta.message = "Cita creada correctamente"
+    return respuesta
