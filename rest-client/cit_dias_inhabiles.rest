@@ -1,0 +1,23 @@
+@root = {{$dotenv HOST}}
+@baseUrl = {{root}}/v4
+@api_key = {{$dotenv API_KEY}}
+
+### Bienvenida
+GET {{root}}
+
+### Cit Dias inhabiles
+GET {{baseUrl}}/cit_dias_inhabiles
+X-Api-Key: {{api_key}}
+
+### Cit Dias inhabiles desde 2023-09-01
+GET {{baseUrl}}/cit_dias_inhabiles
+    ?fecha_desde=2023-09-01
+X-Api-Key: {{api_key}}
+
+### Cit Dia inhabil 2023-11-20
+GET {{baseUrl}}/cit_dias_inhabiles/2023-11-20
+X-Api-Key: {{api_key}}
+
+### Cit Dia inhabil 2023-09-01 que no existe
+GET {{baseUrl}}/cit_dias_inhabiles/2023-09-01
+X-Api-Key: {{api_key}}

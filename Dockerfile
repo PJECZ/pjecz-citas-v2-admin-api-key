@@ -6,6 +6,6 @@ RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 COPY . .
 
-EXPOSE 8005
+EXPOSE 8000
 
-CMD [ "gunicorn", "-w", "4", "-b", "0.0.0.0:8005", "-k", "uvicorn.workers.UvicornWorker", "citas_v2_admin.app:create_app" ]
+CMD [ "gunicorn", "-w", "4", "-b", "0.0.0.0:8000", "-k", "uvicorn.workers.UvicornWorker", "citas_v2_admin.app:create_app" ]

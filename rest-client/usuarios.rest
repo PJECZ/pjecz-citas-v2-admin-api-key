@@ -1,5 +1,5 @@
 @root = {{$dotenv HOST}}
-@baseUrl = {{root}}/v3
+@baseUrl = {{root}}/v4
 @api_key = {{$dotenv API_KEY}}
 
 ### Bienvenida
@@ -28,6 +28,11 @@ X-Api-Key: {{api_key}}
 ### Usuarios con email coahuila.gob.mx
 GET {{baseUrl}}/usuarios
     ?email=coahuila.gob.mx
+X-Api-Key: {{api_key}}
+
+### Usuarios con email coahuila.gob.mx
+GET {{baseUrl}}/usuarios
+    ?email=pjecz.gob.mx
 X-Api-Key: {{api_key}}
 
 ### Usuario slt.mercantil.2do@pjecz.gob.mx

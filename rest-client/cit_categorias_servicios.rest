@@ -1,0 +1,37 @@
+@root = {{$dotenv HOST}}
+@baseUrl = {{root}}/v4
+@api_key = {{$dotenv API_KEY}}
+
+### Bienvenida
+GET {{root}}
+
+### Cit Categorias
+GET {{baseUrl}}/cit_categorias
+X-Api-Key: {{api_key}}
+
+### Cit Categoria con id 2
+GET {{baseUrl}}/cit_categorias/2
+X-Api-Key: {{api_key}}
+
+### Cit Servicios
+GET {{baseUrl}}/cit_servicios
+X-Api-Key: {{api_key}}
+
+### Cit Servicios de la categoria con id 2
+GET {{baseUrl}}/cit_servicios
+    ?cit_categoria_id=2
+X-Api-Key: {{api_key}}
+
+### Cit Servicio con id 8
+GET {{baseUrl}}/cit_servicios/8
+X-Api-Key: {{api_key}}
+
+### Cit Oficinas con el servicio con id 8
+GET {{baseUrl}}/cit_oficinas_servicios
+    ?cit_servicio_id=8
+X-Api-Key: {{api_key}}
+
+### Cit Servicios de la oficina con id 4
+GET {{baseUrl}}/cit_oficinas_servicios
+    ?oficina_id=4
+X-Api-Key: {{api_key}}

@@ -26,6 +26,21 @@ class UsuarioOficina(Base, UniversalMixin):
     # Columnas
     descripcion = Column(String(256), nullable=False)
 
+    @property
+    def oficina_clave(self):
+        """Oficina clave"""
+        return self.oficina.clave
+
+    @property
+    def usuario_email(self):
+        """Email del usuario"""
+        return self.usuario.email
+
+    @property
+    def usuario_nombre(self):
+        """Nombre del usuario"""
+        return self.usuario.nombre
+
     def __repr__(self):
         """Representación"""
         return f"<UsuarioOficina {self.id}>"

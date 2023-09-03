@@ -4,8 +4,7 @@ UniversalMixin define las columnas y métodos comunes de todos los modelos
 import re
 
 from hashids import Hashids
-from sqlalchemy import Column, DateTime, String
-from sqlalchemy.sql import func
+from sqlalchemy import Column, DateTime, String, func
 
 from config.settings import get_settings
 

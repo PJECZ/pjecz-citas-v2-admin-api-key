@@ -1,5 +1,5 @@
 @root = {{$dotenv HOST}}
-@baseUrl = {{root}}/v3
+@baseUrl = {{root}}/v4
 @api_key = {{$dotenv API_KEY}}
 
 ### Bienvenida
@@ -33,7 +33,7 @@ Content-Type: application/json
 }
 
 ### Modificar un boletin
-PUT {{baseUrl}}/boletines/4
+PUT {{baseUrl}}/boletines/3
 X-Api-Key: {{api_key}}
 Content-Type: application/json
 

@@ -2,6 +2,7 @@
 Entradas-Salidas, modelos
 """
 from collections import OrderedDict
+
 from sqlalchemy import Column, Enum, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
@@ -36,6 +37,11 @@ class EntradaSalida(Base, UniversalMixin):
         nullable=False,
     )
     direccion_ip = Column(String(64), nullable=False)
+
+    @property
+    def usuario_email(self):
+        """email del usuario"""
+        return self.usuario.email
 
     @property
     def usuario_nombre(self):

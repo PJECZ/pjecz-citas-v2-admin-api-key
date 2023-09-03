@@ -7,30 +7,30 @@ from fastapi_pagination import add_pagination
 
 from config.settings import get_settings
 
-from .v3.autoridades.paths import autoridades
-from .v3.bitacoras.paths import bitacoras
-from .v3.boletines.paths import boletines
-from .v3.cit_categorias.paths import cit_categorias
-from .v3.cit_citas.paths import cit_citas
-from .v3.cit_clientes.paths import cit_clientes
-from .v3.cit_clientes_recuperaciones.paths import cit_clientes_recuperaciones
-from .v3.cit_clientes_registros.paths import cit_clientes_registros
-from .v3.cit_dias_disponibles.paths import cit_dias_disponibles
-from .v3.cit_dias_inhabiles.paths import cit_dias_inhabiles
-from .v3.cit_horas_bloqueadas.paths import cit_horas_bloqueadas
-from .v3.cit_horas_disponibles.paths import cit_horas_disponibles
-from .v3.cit_oficinas_servicios.paths import cit_oficinas_servicios
-from .v3.cit_servicios.paths import cit_servicios
-from .v3.distritos.paths import distritos
-from .v3.domicilios.paths import domicilios
-from .v3.entradas_salidas.paths import entradas_salidas
-from .v3.modulos.paths import modulos
-from .v3.oficinas.paths import oficinas
-from .v3.permisos.paths import permisos
-from .v3.roles.paths import roles
-from .v3.usuarios.paths import usuarios
-from .v3.usuarios_oficinas.paths import usuarios_oficinas
-from .v3.usuarios_roles.paths import usuarios_roles
+from .v4.autoridades.paths import autoridades
+from .v4.bitacoras.paths import bitacoras
+from .v4.boletines.paths import boletines
+from .v4.cit_categorias.paths import cit_categorias
+from .v4.cit_citas.paths import cit_citas
+from .v4.cit_clientes.paths import cit_clientes
+from .v4.cit_clientes_recuperaciones.paths import cit_clientes_recuperaciones
+from .v4.cit_clientes_registros.paths import cit_clientes_registros
+from .v4.cit_dias_disponibles.paths import cit_dias_disponibles
+from .v4.cit_dias_inhabiles.paths import cit_dias_inhabiles
+from .v4.cit_horas_bloqueadas.paths import cit_horas_bloqueadas
+from .v4.cit_horas_disponibles.paths import cit_horas_disponibles
+from .v4.cit_oficinas_servicios.paths import cit_oficinas_servicios
+from .v4.cit_servicios.paths import cit_servicios
+from .v4.distritos.paths import distritos
+from .v4.domicilios.paths import domicilios
+from .v4.entradas_salidas.paths import entradas_salidas
+from .v4.modulos.paths import modulos
+from .v4.oficinas.paths import oficinas
+from .v4.permisos.paths import permisos
+from .v4.roles.paths import roles
+from .v4.usuarios.paths import usuarios
+from .v4.usuarios_oficinas.paths import usuarios_oficinas
+from .v4.usuarios_roles.paths import usuarios_roles
 
 
 def create_app() -> FastAPI:
@@ -39,7 +39,9 @@ def create_app() -> FastAPI:
     # FastAPI
     app = FastAPI(
         title="PJECZ Citas V2 admin API Key",
-        description="Bienvenido a PJECZ Citas V2 admin API Key. Esta API es para trabajar con los datos del sistema de citas. Se requiere tener una api-key para usarse.",
+        description="API con autentificación para realizar operaciones con la base de datos de Citas V2. Hecho con FastAPI.",
+        docs_url="/docs",
+        redoc_url=None,
     )
 
     # CORSMiddleware
@@ -85,7 +87,7 @@ def create_app() -> FastAPI:
     @app.get("/")
     async def root():
         """Mensaje de Bienvenida"""
-        return {"message": "Bienvenido a PJECZ Citas V2 admin API Key. Esta API es para trabajar con los datos del sistema de citas. Se requiere tener una api-key para usarse."}
+        return {"message": "API con autentificación para realizar operaciones con la base de datos de Citas V2. Hecho con FastAPI."}
 
     # Entregar
     return app

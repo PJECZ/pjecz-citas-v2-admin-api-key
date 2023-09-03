@@ -1,8 +1,8 @@
 """
 Cifrado y descrifado de ID por medio de Hashids
 """
-from typing import Any
 import re
+from typing import Any
 
 from fastapi import Depends
 from hashids import Hashids

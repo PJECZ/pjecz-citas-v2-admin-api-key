@@ -3,7 +3,7 @@ Boletines, modelos
 """
 from collections import OrderedDict
 
-from sqlalchemy import Column, DateTime, Enum, JSON, Integer, String
+from sqlalchemy import JSON, Column, DateTime, Enum, Integer, String
 
 from lib.database import Base
 from lib.universal_mixin import UniversalMixin
