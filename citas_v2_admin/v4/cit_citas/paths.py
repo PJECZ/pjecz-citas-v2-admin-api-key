@@ -80,7 +80,7 @@ async def paginado_cit_citas(
     return paginate(resultados)
 
 
-@cit_citas.get("/cit_citas_agendadas_por_servicio_oficina", response_model=CustomList[CitCitasAgendadasPorServicioOficinaOut])
+@cit_citas.get("/agendadas_por_servicio_oficina", response_model=CustomList[CitCitasAgendadasPorServicioOficinaOut])
 async def listado_cit_citas_agendadas_por_servicio_oficina(
     current_user: Annotated[UsuarioInDB, Depends(get_current_active_user)],
     database: Annotated[Session, Depends(get_db)],
@@ -136,7 +136,7 @@ async def listado_cit_citas_creados_por_dia(
     return CustomList(items=lista, message="Success", success=True, total=len(lista), page=1, size=size, pages=1)
 
 
-@cit_citas.get("/cit_citas_creados_por_dia_distrito", response_model=CustomList[CitCitasCreadosPorDiaDistritoOut])
+@cit_citas.get("/creados_por_dia_distrito", response_model=CustomList[CitCitasCreadosPorDiaDistritoOut])
 async def listado_cit_citas_creados_por_dia_distrito(
     current_user: Annotated[UsuarioInDB, Depends(get_current_active_user)],
     database: Annotated[Session, Depends(get_db)],
