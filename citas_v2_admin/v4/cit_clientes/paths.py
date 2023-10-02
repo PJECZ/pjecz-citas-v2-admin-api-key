@@ -14,7 +14,13 @@ from lib.fastapi_pagination_custom_page import CustomPage
 
 from ...core.permisos.models import Permiso
 from ..usuarios.authentications import UsuarioInDB, get_current_active_user
-from .crud import get_cit_cliente, get_cit_clientes, get_cit_clientes_creados_por_dia
+from .crud import (
+    get_cit_cliente,
+    get_cit_cliente_with_curp,
+    get_cit_cliente_with_email,
+    get_cit_clientes,
+    get_cit_clientes_creados_por_dia,
+)
 from .schemas import CitClienteOut, CitClientesCreadosPorDiaOut, OneCitClienteOut
 
 cit_clientes = APIRouter(prefix="/v4/cit_clientes", tags=["citas"])
@@ -85,6 +91,38 @@ async def listado_cit_clientes_registros_creados_por_dia(
         return CustomList(success=False, message=str(error))
     lista = [CitClientesCreadosPorDiaOut(creado=item.creado, cantidad=item.cantidad) for item in resultados]
     return CustomList(items=lista, message="Success", success=True, total=len(lista), page=1, size=size, pages=1)
+
+
+@cit_clientes.get("/curp/{curp}", response_model=OneCitClienteOut)
+async def detalle_cit_cliente_con_curp(
+    current_user: Annotated[UsuarioInDB, Depends(get_current_active_user)],
+    database: Annotated[Session, Depends(get_db)],
+    curp: str,
+):
+    """Detaller de un cliente a partir de su CURP"""
+    if current_user.permissions.get("CIT CLIENTES", 0) < Permiso.VER:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
+    try:
+        cit_cliente = get_cit_cliente_with_curp(database, curp)
+    except MyAnyError as error:
+        return OneCitClienteOut(success=False, message=str(error))
+    return OneCitClienteOut.model_validate(cit_cliente)
+
+
+@cit_clientes.get("/email/{email}", response_model=OneCitClienteOut)
+async def detalle_cit_cliente_con_email(
+    current_user: Annotated[UsuarioInDB, Depends(get_current_active_user)],
+    database: Annotated[Session, Depends(get_db)],
+    email: str,
+):
+    """Detaller de un cliente a partir de su email"""
+    if current_user.permissions.get("CIT CLIENTES", 0) < Permiso.VER:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
+    try:
+        cit_cliente = get_cit_cliente_with_email(database, email)
+    except MyAnyError as error:
+        return OneCitClienteOut(success=False, message=str(error))
+    return OneCitClienteOut.model_validate(cit_cliente)
 
 
 @cit_clientes.get("/{cit_cliente_id}", response_model=OneCitClienteOut)
