@@ -44,33 +44,35 @@ GET {{baseUrl}}/cit_clientes/4653
 X-Api-Key: {{api_key}}
 
 ### GET Cliente por CURP
-GET {{baseUrl}}/cit_clientes/curp/XXXXXX00000000000
+GET {{baseUrl}}/cit_clientes/curp
+    ?curp=XXXXXX00000000000
 X-Api-Key: {{api_key}}
 
 ### GET Cliente por e-mail
-GET {{baseUrl}}/cit_clientes/email/anonymous@company.com
+GET {{baseUrl}}/cit_clientes/email
+    ?email=anonymous@company.com
 X-Api-Key: {{api_key}}
 
 ### POST crear cita
-POST {{baseUrl}}/cit_citas/nueva
+POST {{baseUrl}}/cit_citas/crear
 X-Api-Key: {{api_key}}
 
 {
-    "cit_cliente_id": 12070,
-    "oficina_id": 71,
+    "cit_cliente_id": 4653,
+    "oficina_id": 69,
     "cit_servicio_id": 2,
-    "fecha": "2022-10-25",
-    "hora_minuto": "11:30",
+    "fecha": "2023-12-20",
+    "hora_minuto": "10:30",
     "notas": "Cita de prueba"
 }
 
 ### GET cita
-GET {{baseUrl}}/cit_citas/37641
+GET {{baseUrl}}/cit_citas/338261
 X-Api-Key: {{api_key}}
 
 ### GET mis citas por ID de cliente
 GET {{baseUrl}}/cit_citas/mis_citas
-    ?cit_cliente_id=12070
+    ?cit_cliente_id=4653
 X-Api-Key: {{api_key}}
 
 ### GET mis citas por CURP de cliente
@@ -83,8 +85,8 @@ GET {{baseUrl}}/cit_citas/mis_citas
     ?cit_cliente_email=anonymous@company.com
 X-Api-Key: {{api_key}}
 
-### POST cancelar una cita PENDIENTE
-POST {{baseUrl}}/cit_citas/cancelar
+### PUT cancelar una cita PENDIENTE
+PUT {{baseUrl}}/cit_citas/cancelar
 X-Api-Key: {{api_key}}
 
 {
