@@ -77,12 +77,12 @@ X-Api-Key: {{api_key}}
 
 ### GET mis citas por CURP de cliente
 GET {{baseUrl}}/cit_citas/mis_citas
-    ?cit_cliente_curp=XXXXXX00000000000
+    ?curp=XXXXXX00000000000
 X-Api-Key: {{api_key}}
 
 ### GET mis citas por email de cliente
 GET {{baseUrl}}/cit_citas/mis_citas
-    ?cit_cliente_email=anonymous@company.com
+    ?email=anonymous@company.com
 X-Api-Key: {{api_key}}
 
 ### PUT cancelar una cita PENDIENTE
@@ -90,6 +90,6 @@ PUT {{baseUrl}}/cit_citas/cancelar
 X-Api-Key: {{api_key}}
 
 {
-    "id": 37641,
+    "cit_cita_id": 37641,
     "cit_cliente_id": 12070
 }
