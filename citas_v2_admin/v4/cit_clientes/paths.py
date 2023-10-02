@@ -1,7 +1,6 @@
 """
 Cit Clientes v4, rutas (paths)
 """
-import re
 from datetime import date
 from typing import Annotated
 
@@ -12,7 +11,6 @@ from lib.database import Session, get_db
 from lib.exceptions import MyAnyError
 from lib.fastapi_pagination_custom_list import CustomList
 from lib.fastapi_pagination_custom_page import CustomPage
-from lib.safe_string import CURP_REGEXP, EMAIL_REGEXP
 
 from ...core.permisos.models import Permiso
 from ..usuarios.authentications import UsuarioInDB, get_current_active_user
@@ -63,8 +61,6 @@ async def detalle_cit_cliente_con_curp(
     """Detaller de un cliente a partir de su CURP"""
     if current_user.permissions.get("CIT CLIENTES", 0) < Permiso.VER:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
-    if re.fullmatch(CURP_REGEXP, curp) is None:
-        return OneCitClienteOut(success=False, message="CURP es incorrecto")
     try:
         cit_cliente = get_cit_cliente_with_curp(database, curp)
     except MyAnyError as error:
@@ -81,8 +77,6 @@ async def detalle_cit_cliente_con_email(
     """Detaller de un cliente a partir de su email"""
     if current_user.permissions.get("CIT CLIENTES", 0) < Permiso.VER:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
-    if re.fullmatch(EMAIL_REGEXP, email) is None:
-        return OneCitClienteOut(success=False, message="E-mail es incorrecto")
     try:
         cit_cliente = get_cit_cliente_with_email(database, email)
     except MyAnyError as error:
