@@ -26,10 +26,9 @@ async def paginado_oficinas(
     distrito_clave: str = None,
     domicilio_id: int = None,
     es_jurisdiccional: bool = None,
-    puede_agendar_citas: bool = None,
     puede_enviar_qr: bool = None,
 ):
-    """Paginado de oficinas"""
+    """Paginado de oficinas que pueden agendar citas"""
     if current_user.permissions.get("OFICINAS", 0) < Permiso.VER:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
     try:
@@ -39,7 +38,7 @@ async def paginado_oficinas(
             distrito_clave=distrito_clave,
             domicilio_id=domicilio_id,
             es_jurisdiccional=es_jurisdiccional,
-            puede_agendar_citas=puede_agendar_citas,
+            puede_agendar_citas=True,  # Solo las que pueden agendar citas
             puede_enviar_qr=puede_enviar_qr,
         )
     except MyAnyError as error:

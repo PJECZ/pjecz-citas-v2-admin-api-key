@@ -14,8 +14,18 @@ X-Api-Key: {{api_key}}
 GET {{baseUrl}}/domicilios/18
 X-Api-Key: {{api_key}}
 
-### Oficinas
+### Oficinas que pueden agendar citas
 GET {{baseUrl}}/oficinas
+X-Api-Key: {{api_key}}
+
+### Oficinas que pueden agendar citas de Saltillo
+GET {{baseUrl}}/oficinas
+    ?distrito_id=6
+X-Api-Key: {{api_key}}
+
+### Oficinas que pueden agendar citas de Saltillo
+GET {{baseUrl}}/oficinas
+    ?distrito_clave=dslt
 X-Api-Key: {{api_key}}
 
 ### Oficina con clave MNC-J1-CIV
