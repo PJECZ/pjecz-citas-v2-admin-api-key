@@ -1,8 +1,11 @@
 """
 Domicilios, modelos
 """
-from sqlalchemy import Column, ForeignKey, Integer, String
-from sqlalchemy.orm import relationship
+
+from typing import List
+
+from sqlalchemy import ForeignKey, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from lib.database import Base
 from lib.universal_mixin import UniversalMixin
@@ -15,25 +18,25 @@ class Domicilio(Base, UniversalMixin):
     __tablename__ = "domicilios"
 
     # Clave primaria
-    id = Column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
 
-    # Claves foráneas
-    distrito_id = Column(Integer, ForeignKey("distritos.id"), index=True, nullable=False)
-    distrito = relationship("Distrito", back_populates="domicilios")
+    # Clave foránea
+    distrito_id: Mapped[int] = mapped_column(ForeignKey("distritos.id"))
+    distrito: Mapped["Distrito"] = relationship(back_populates="domicilios")
 
     # Columnas
-    edificio = Column(String(64), nullable=True, unique=True)
-    estado = Column(String(64), nullable=False)
-    municipio = Column(String(64), nullable=False)
-    calle = Column(String(256), nullable=False)
-    num_ext = Column(String(24), nullable=False)
-    num_int = Column(String(24), nullable=False)
-    colonia = Column(String(256), nullable=False)
-    cp = Column(Integer(), nullable=False)
-    completo = Column(String(1024), nullable=False)
+    edificio: Mapped[str] = mapped_column(String(64), unique=True)
+    estado: Mapped[str] = mapped_column(String(64))
+    municipio: Mapped[str] = mapped_column(String(64))
+    calle: Mapped[str] = mapped_column(String(256))
+    num_ext: Mapped[str] = mapped_column(String(24))
+    num_int: Mapped[str] = mapped_column(String(24))
+    colonia: Mapped[str] = mapped_column(String(256))
+    cp: Mapped[int]
+    completo: Mapped[str] = mapped_column(String(1024))
 
     # Hijos
-    oficinas = relationship("Oficina", back_populates="domicilio")
+    oficinas: Mapped[List["Oficina"]] = relationship("Oficina", back_populates="domicilio")
 
     @property
     def distrito_clave(self):

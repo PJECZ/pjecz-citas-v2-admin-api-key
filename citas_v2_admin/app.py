@@ -55,8 +55,8 @@ def create_app() -> FastAPI:
     )
 
     # Rutas
-    app.include_router(autoridades)
-    app.include_router(bitacoras)
+    app.include_router(autoridades, include_in_schema=False)
+    app.include_router(bitacoras, include_in_schema=False)
     app.include_router(boletines)
     app.include_router(cit_categorias)
     app.include_router(cit_citas)
@@ -69,16 +69,16 @@ def create_app() -> FastAPI:
     app.include_router(cit_horas_disponibles)
     app.include_router(cit_oficinas_servicios)
     app.include_router(cit_servicios)
-    app.include_router(distritos)
-    app.include_router(domicilios)
-    app.include_router(entradas_salidas)
-    app.include_router(modulos)
-    app.include_router(oficinas)
-    app.include_router(permisos)
-    app.include_router(roles)
-    app.include_router(usuarios)
-    app.include_router(usuarios_oficinas)
-    app.include_router(usuarios_roles)
+    app.include_router(distritos, include_in_schema=False)
+    app.include_router(domicilios, include_in_schema=False)
+    app.include_router(entradas_salidas, include_in_schema=False)
+    app.include_router(modulos, include_in_schema=False)
+    app.include_router(oficinas, include_in_schema=False)
+    app.include_router(permisos, include_in_schema=False)
+    app.include_router(roles, include_in_schema=False)
+    app.include_router(usuarios, include_in_schema=False)
+    app.include_router(usuarios_oficinas, include_in_schema=False)
+    app.include_router(usuarios_roles, include_in_schema=False)
 
     # Paginación
     add_pagination(app)
@@ -87,7 +87,9 @@ def create_app() -> FastAPI:
     @app.get("/")
     async def root():
         """Mensaje de Bienvenida"""
-        return {"message": "API con autentificación para realizar operaciones con la base de datos de Citas V2. Hecho con FastAPI."}
+        return {
+            "message": "API con autentificación para realizar operaciones con la base de datos de Citas V2. Hecho con FastAPI."
+        }
 
     # Entregar
     return app
