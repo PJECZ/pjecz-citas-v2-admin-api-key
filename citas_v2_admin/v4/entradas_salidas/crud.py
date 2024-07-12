@@ -24,7 +24,7 @@ def get_entradas_salidas(
     elif usuario_email is not None:
         usuario = get_usuario_with_email(database, usuario_email)
         consulta = consulta.filter_by(usuario_id=usuario.id)
-    return consulta.filter_by(estatus="A").order_by(EntradaSalida.id)
+    return consulta.filter(EntradaSalida.estatus == "A").order_by(EntradaSalida.id)
 
 
 def get_entrada_salida(database: Session, entrada_salida_id: int) -> EntradaSalida:

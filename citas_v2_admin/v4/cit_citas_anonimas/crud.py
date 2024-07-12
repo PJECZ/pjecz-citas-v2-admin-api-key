@@ -21,7 +21,9 @@ def get_cit_citas_anonimas(
 
     # Si viene hora_minuto
     if fecha is not None and hora_minuto is not None:
-        inicio_dt = datetime(year=fecha.year, month=fecha.month, day=fecha.day, hour=hora_minuto.hour, minute=hora_minuto.minute, second=0)
+        inicio_dt = datetime(
+            year=fecha.year, month=fecha.month, day=fecha.day, hour=hora_minuto.hour, minute=hora_minuto.minute, second=0
+        )
         consulta = consulta.filter(CitCita.inicio == inicio_dt)
     else:
         # Se filtra por fecha
@@ -37,4 +39,4 @@ def get_cit_citas_anonimas(
     consulta = consulta.filter(CitCita.estado != "CANCELO")
 
     # Entregar
-    return consulta.filter_by(estatus="A").order_by(CitCita.id.desc())
+    return consulta.filter(CitCita.estatus == "A").order_by(CitCita.id.desc())

@@ -25,7 +25,7 @@ def get_distritos(
         consulta = consulta.filter_by(es_distrito=es_distrito)
     if es_jurisdiccional is not None:
         consulta = consulta.filter_by(es_jurisdiccional=es_jurisdiccional)
-    return consulta.filter_by(estatus="A").order_by(Distrito.id)
+    return consulta.filter(Distrito.estatus == "A").order_by(Distrito.id)
 
 
 def get_distrito(database: Session, distrito_id: int) -> Distrito:

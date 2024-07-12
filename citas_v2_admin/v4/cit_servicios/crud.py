@@ -20,7 +20,7 @@ def get_cit_servicios(
     if cit_categoria_id is not None:
         cit_categoria = get_cit_categoria(database, cit_categoria_id)
         consulta = consulta.filter_by(cit_categoria=cit_categoria)
-    return consulta.filter_by(estatus="A").order_by(CitServicio.id)
+    return consulta.filter(CitServicio.estatus == "A").order_by(CitServicio.id)
 
 
 def get_cit_servicio(database: Session, cit_servicio_id: int) -> CitServicio:

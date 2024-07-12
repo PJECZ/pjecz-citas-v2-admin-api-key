@@ -56,7 +56,9 @@ def get_cit_clientes(
         desde_dt = datetime(year=creado_desde.year, month=creado_desde.month, day=creado_desde.day, hour=0, minute=0, second=0)
         consulta = consulta.filter(CitCliente.creado >= desde_dt)
     if creado is None and creado_hasta is not None:
-        hasta_dt = datetime(year=creado_hasta.year, month=creado_hasta.month, day=creado_hasta.day, hour=23, minute=59, second=59)
+        hasta_dt = datetime(
+            year=creado_hasta.year, month=creado_hasta.month, day=creado_hasta.day, hour=23, minute=59, second=59
+        )
         consulta = consulta.filter(CitCliente.creado <= hasta_dt)
 
     # Filtrar por fragmento de CURP
@@ -101,7 +103,7 @@ def get_cit_clientes(
             consulta = consulta.filter(CitCliente.contrasena_sha256 == "")
 
     # Entregar
-    return consulta.filter_by(estatus="A").order_by(CitCliente.id)
+    return consulta.filter(CitCliente.estatus == "A").order_by(CitCliente.id)
 
 
 def get_cit_cliente(database: Session, cit_cliente_id: int) -> CitCliente:
@@ -168,10 +170,14 @@ def get_cit_clientes_creados_por_dia(
         consulta = consulta.filter(CitCliente.creado >= desde_dt).filter(CitCliente.creado <= hasta_dt)
     else:
         if creado_desde is not None:
-            desde_dt = datetime(year=creado_desde.year, month=creado_desde.month, day=creado_desde.day, hour=0, minute=0, second=0)
+            desde_dt = datetime(
+                year=creado_desde.year, month=creado_desde.month, day=creado_desde.day, hour=0, minute=0, second=0
+            )
             consulta = consulta.filter(CitCliente.creado >= desde_dt)
         if creado_hasta is not None:
-            hasta_dt = datetime(year=creado_hasta.year, month=creado_hasta.month, day=creado_hasta.day, hour=23, minute=59, second=59)
+            hasta_dt = datetime(
+                year=creado_hasta.year, month=creado_hasta.month, day=creado_hasta.day, hour=23, minute=59, second=59
+            )
             consulta = consulta.filter(CitCliente.creado <= hasta_dt)
 
     # Agrupar por creado y entregar

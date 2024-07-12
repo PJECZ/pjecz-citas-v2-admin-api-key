@@ -124,7 +124,7 @@ def get_cit_citas(
         consulta = consulta.filter_by(oficina_id=oficina.id)
 
     # Entregar
-    return consulta.filter_by(estatus="A").order_by(CitCita.id.desc())
+    return consulta.filter(CitCita.estatus == "A").order_by(CitCita.id.desc())
 
 
 def get_cit_citas_agendadas_por_servicio_oficina(

@@ -33,7 +33,7 @@ def get_usuarios_oficinas(
     elif usuario_email is not None:
         usuario = get_usuario_with_email(database, usuario_email)
         consulta = consulta.filter_by(usuario_id=usuario.id)
-    return consulta.filter_by(estatus="A").order_by(UsuarioOficina.id)
+    return consulta.filter(UsuarioOficina.estatus == "A").order_by(UsuarioOficina.id)
 
 
 def get_usuario_oficina(database: Session, usuario_oficina_id: int) -> UsuarioOficina:
