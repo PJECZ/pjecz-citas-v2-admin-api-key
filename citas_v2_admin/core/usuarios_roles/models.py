@@ -19,9 +19,9 @@ class UsuarioRol(Base, UniversalMixin):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     # Claves foráneas
-    rol_id: Mapped[int] = mapped_column(ForeignKey("roles.id"))
+    rol_id: Mapped[int] = mapped_column(ForeignKey("roles.id"), index=True)
     rol: Mapped["Rol"] = relationship(back_populates="usuarios_roles")
-    usuario_id: Mapped[int] = mapped_column(ForeignKey("usuarios.id"))
+    usuario_id: Mapped[int] = mapped_column(ForeignKey("usuarios.id"), index=True)
     usuario: Mapped["Usuario"] = relationship(back_populates="usuarios_roles")
 
     # Columnas

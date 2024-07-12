@@ -19,9 +19,9 @@ class Bitacora(Base, UniversalMixin):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     # Claves foráneas
-    modulo_id: Mapped[int] = mapped_column(ForeignKey("modulos.id"))
+    modulo_id: Mapped[int] = mapped_column(ForeignKey("modulos.id"), index=True)
     modulo: Mapped["Modulo"] = relationship(back_populates="bitacoras")
-    usuario_id: Mapped[int] = mapped_column(ForeignKey("usuarios.id"))
+    usuario_id: Mapped[int] = mapped_column(ForeignKey("usuarios.id"), index=True)
     usuario: Mapped["Usuario"] = relationship(back_populates="bitacoras")
 
     # Columnas

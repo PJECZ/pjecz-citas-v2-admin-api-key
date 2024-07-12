@@ -2,7 +2,7 @@
 package-mode = false
 name = "pjecz-citas-v2-admin-api-key"
 version = "4.0.0"
-description = "API con autentificación para realizar operaciones con la base de datos de Citas V2. Hecho con FastAPI."
+description = "API con autentificación para realizar operaciones con la base de datos de Citas V2."
 authors = ["Guillermo Valdes <guillermo@movimientolibre.com>"]
 license = "AGPL3"
 readme = "README.md"

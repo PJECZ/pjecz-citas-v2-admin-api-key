@@ -24,9 +24,9 @@ class Usuario(Base, UniversalMixin):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     # Claves foráneas
-    autoridad_id: Mapped[int] = mapped_column(ForeignKey("autoridades.id"))
+    autoridad_id: Mapped[int] = mapped_column(ForeignKey("autoridades.id"), index=True)
     autoridad: Mapped["Autoridad"] = relationship("Autoridad", back_populates="usuarios")
-    oficina_id: Mapped[int] = mapped_column(ForeignKey("oficinas.id"))
+    oficina_id: Mapped[int] = mapped_column(ForeignKey("oficinas.id"), index=True)
     oficina: Mapped["Oficina"] = relationship("Oficina", back_populates="usuarios")
 
     # Columnas
@@ -36,6 +36,7 @@ class Usuario(Base, UniversalMixin):
     apellido_materno: Mapped[str] = mapped_column(String(256))
     curp: Mapped[str] = mapped_column(String(18))
     puesto: Mapped[str] = mapped_column(String(256))
+    telefono_celular: Mapped[Optional[str]] = mapped_column(String(256))
     api_key: Mapped[Optional[str]] = mapped_column(String(128))
     api_key_expiracion: Mapped[Optional[datetime]]
     contrasena: Mapped[Optional[str]] = mapped_column(String(256))
@@ -43,7 +44,6 @@ class Usuario(Base, UniversalMixin):
     # Hijos
     bitacoras: Mapped[List["Bitacora"]] = relationship("Bitacora", back_populates="usuario")
     entradas_salidas: Mapped[List["EntradaSalida"]] = relationship("EntradaSalida", back_populates="usuario")
-    tareas: Mapped[List["Tarea"]] = relationship("Tarea", back_populates="usuario")
     usuarios_roles: Mapped[List["UsuarioRol"]] = relationship("UsuarioRol", back_populates="usuario")
     usuarios_oficinas: Mapped[List["UsuarioOficina"]] = relationship("UsuarioOficina", back_populates="usuario")
 

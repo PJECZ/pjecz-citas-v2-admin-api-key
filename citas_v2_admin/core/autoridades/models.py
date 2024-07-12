@@ -14,44 +14,45 @@ from lib.universal_mixin import UniversalMixin
 class Autoridad(Base, UniversalMixin):
     """Autoridad"""
 
-    ORGANOS_JURISDICCIONALES = OrderedDict(
-        [
-            ("NO DEFINIDO", "No Definido"),
-            ("JUZGADO DE PRIMERA INSTANCIA", "Juzgado de Primera Instancia"),
-            ("JUZGADO DE PRIMERA INSTANCIA ORAL", "Juzgado de Primera Instancia Oral"),
-            ("PLENO O SALA DEL TSJ", "Pleno o Sala del TSJ"),
-            ("TRIBUNAL DISTRITAL", "Tribunal Distrital"),
-            ("TRIBUNAL DE CONCILIACION Y ARBITRAJE", "Tribunal de Conciliación y Arbitraje"),
-        ]
-    )
+    ORGANOS_JURISDICCIONALES = {
+        "NO DEFINIDO": "No Definido",
+        "JUZGADO DE PRIMERA INSTANCIA": "Juzgado de Primera Instancia",
+        "JUZGADO DE PRIMERA INSTANCIA ORAL": "Juzgado de Primera Instancia Oral",
+        "PLENO O SALA DEL TSJ": "Pleno o Sala del TSJ",
+        "TRIBUNAL DISTRITAL": "Tribunal Distrital",
+        "TRIBUNAL DE CONCILIACION Y ARBITRAJE": "Tribunal de Conciliación y Arbitraje",
+    }
 
     # Nombre de la tabla
     __tablename__ = "autoridades"
 
     # Clave primaria
-    id = Column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
 
     # Claves foráneas
-    distrito_id = Column(Integer, ForeignKey("distritos.id"), index=True, nullable=False)
-    distrito = relationship("Distrito", back_populates="autoridades")
-    materia_id = Column(Integer, ForeignKey("materias.id"), index=True, nullable=False)
-    materia = relationship("Materia", back_populates="autoridades")
+    distrito_id: Mapped[int] = mapped_column(ForeignKey("distritos.id"), index=True)
+    distrito: Mapped["Distrito"] = relationship(back_populates="autoridades")
+    materia_id: Mapped[int] = mapped_column(ForeignKey("materias.id"), index=True)
+    materia: Mapped["Materia"] = relationship(back_populates="autoridades")
 
     # Columnas
-    clave = Column(String(16), nullable=False, unique=True)
-    descripcion = Column(String(256), nullable=False)
-    descripcion_corta = Column(String(64), nullable=False)
-    es_jurisdiccional = Column(Boolean(), nullable=False, default=False)
-    es_notaria = Column(Boolean(), nullable=False, default=False)
-    es_organo_especializado = Column(Boolean(), nullable=False, default=False)
-    organo_jurisdiccional = Column(
-        Enum(*ORGANOS_JURISDICCIONALES, name="tipos_organos_jurisdiccionales", native_enum=False),
+    clave: Mapped[str] = mapped_column(String(16), unique=True)
+    descripcion: Mapped[str] = mapped_column(String(256))
+    descripcion_corta: Mapped[str] = mapped_column(String(64))
+    es_jurisdiccional: Mapped[bool] = mapped_column(default=False)
+    es_notaria: Mapped[bool] = mapped_column(default=False)
+    es_organo_especializado: Mapped[bool] = mapped_column(default=False)
+    organo_jurisdiccional: Mapped[str] = mapped_column(
+        Enum(
+            *ORGANOS_JURISDICCIONALES,
+            name="tipos_organos_jurisdiccionales",
+            native_enum=False,
+        ),
         index=True,
-        nullable=False,
     )
 
     # Hijos
-    usuarios = relationship("Usuario", back_populates="autoridad")
+    usuarios: Mapped[List["Usuario"]] = relationship("Usuario", back_populates="autoridad")
 
     @property
     def es_creador_glosas(self):

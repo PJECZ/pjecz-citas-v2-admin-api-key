@@ -22,9 +22,9 @@ class Oficina(Base, UniversalMixin):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     # Claves foráneas
-    distrito_id: Mapped[int] = mapped_column(ForeignKey("distritos.id"))
+    distrito_id: Mapped[int] = mapped_column(ForeignKey("distritos.id"), index=True)
     distrito: Mapped["Distrito"] = relationship(back_populates="oficinas")
-    domicilio_id: Mapped[int] = mapped_column(ForeignKey("domicilios.id"))
+    domicilio_id: Mapped[int] = mapped_column(ForeignKey("domicilios.id"), index=True)
     domicilio: Mapped["Domicilio"] = relationship(back_populates="oficinas")
 
     # Columnas

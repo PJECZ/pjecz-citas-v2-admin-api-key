@@ -21,7 +21,7 @@ class Domicilio(Base, UniversalMixin):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     # Clave foránea
-    distrito_id: Mapped[int] = mapped_column(ForeignKey("distritos.id"))
+    distrito_id: Mapped[int] = mapped_column(ForeignKey("distritos.id"), index=True)
     distrito: Mapped["Distrito"] = relationship(back_populates="domicilios")
 
     # Columnas

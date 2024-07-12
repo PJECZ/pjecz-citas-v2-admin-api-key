@@ -1,8 +1,9 @@
 """
 Cit Categorias, modelos
 """
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.orm import relationship
+
+from sqlalchemy import String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from lib.database import Base
 from lib.universal_mixin import UniversalMixin
@@ -15,13 +16,13 @@ class CitCategoria(Base, UniversalMixin):
     __tablename__ = "cit_categorias"
 
     # Clave primaria
-    id = Column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
 
     # Columnas
-    nombre = Column(String(64), unique=True, nullable=False)
+    nombre: Mapped[str] = mapped_column(String(64), unique=True)
 
     # Hijos
-    cit_servicios = relationship("CitServicio", back_populates="cit_categoria")
+    cit_servicios: Mapped["CitServicio"] = relationship("CitServicio", back_populates="cit_categoria")
 
     def __repr__(self):
         """Representación"""

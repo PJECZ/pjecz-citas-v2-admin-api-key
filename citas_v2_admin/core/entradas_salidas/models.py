@@ -24,7 +24,7 @@ class EntradaSalida(Base, UniversalMixin):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     # Claves foráneas
-    usuario_id: Mapped[int] = mapped_column(ForeignKey("usuarios.id"))
+    usuario_id: Mapped[int] = mapped_column(ForeignKey("usuarios.id"), index=True)
     usuario: Mapped["Usuario"] = relationship(back_populates="entradas_salidas")
 
     # Columnas

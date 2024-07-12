@@ -1,8 +1,11 @@
 """
 Cit Clientes Recuperaciones, modelos
 """
-from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String
-from sqlalchemy.orm import relationship
+
+from datetime import datetime
+
+from sqlalchemy import ForeignKey, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from lib.database import Base
 from lib.universal_mixin import UniversalMixin
@@ -15,17 +18,17 @@ class CitClienteRecuperacion(Base, UniversalMixin):
     __tablename__ = "cit_clientes_recuperaciones"
 
     # Clave primaria
-    id = Column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
 
     # Clave foránea
-    cit_cliente_id = Column(Integer, ForeignKey("cit_clientes.id"), index=True, nullable=False)
-    cit_cliente = relationship("CitCliente", back_populates="cit_clientes_recuperaciones")
+    cit_cliente_id: Mapped[int] = mapped_column(ForeignKey("cit_clientes.id"), index=True)
+    cit_cliente: Mapped["CitCliente"] = relationship(back_populates="cit_clientes_recuperaciones")
 
     # Columnas
-    expiracion = Column(DateTime(), nullable=False)
-    cadena_validar = Column(String(256), nullable=False)
-    mensajes_cantidad = Column(Integer(), nullable=False, default=0)
-    ya_recuperado = Column(Boolean(), nullable=False, default=False)
+    expiracion: Mapped[datetime]
+    cadena_validar: Mapped[str] = mapped_column(String(256))
+    mensajes_cantidad: Mapped[int] = mapped_column(default=0)
+    ya_recuperado: Mapped[bool] = mapped_column(default=False)
 
     @property
     def cit_cliente_nombre(self):
