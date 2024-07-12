@@ -39,7 +39,7 @@ def get_cit_oficinas_servicios(
         consulta = consulta.filter_by(oficina=oficina)
 
     # Entregar
-    return consulta.filter_by(estatus="A").order_by(CitOficinaServicio.id)
+    return consulta.filter(CitOficinaServicio.estatus == "A").order_by(CitOficinaServicio.id)
 
 
 def get_cit_oficina_servicio(database: Session, oficina_servicio_id: int) -> CitOficinaServicio:

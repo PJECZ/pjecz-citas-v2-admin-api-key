@@ -1,8 +1,12 @@
 """
 Cit Clientes, modelos
 """
-from sqlalchemy import Boolean, Column, Date, Integer, String
-from sqlalchemy.orm import relationship
+
+from datetime import date
+from typing import List
+
+from sqlalchemy import Enum, ForeignKey, String, Text
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from lib.database import Base
 from lib.universal_mixin import UniversalMixin
@@ -15,32 +19,34 @@ class CitCliente(Base, UniversalMixin):
     __tablename__ = "cit_clientes"
 
     # Clave primaria
-    id = Column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
 
     # Columnas
-    nombres = Column(String(256), nullable=False)
-    apellido_primero = Column(String(256), nullable=False)
-    apellido_segundo = Column(String(256), nullable=False)
-    curp = Column(String(18), unique=True, nullable=False)
-    telefono = Column(String(64), nullable=False)
-    email = Column(String(256), unique=True, nullable=False)
-    contrasena_md5 = Column(String(256), nullable=False)
-    contrasena_sha256 = Column(String(256), nullable=False)
-    renovacion = Column(Date(), nullable=False)
-    limite_citas_pendientes = Column(Integer(), nullable=False, default=0)
+    nombres: Mapped[str] = mapped_column(String(256))
+    apellido_primero: Mapped[str] = mapped_column(String(256))
+    apellido_segundo: Mapped[str] = mapped_column(String(256))
+    curp: Mapped[str] = mapped_column(String(18), unique=True)
+    telefono: Mapped[str] = mapped_column(String(64))
+    email: Mapped[str] = mapped_column(String(256), unique=True)
+    contrasena_md5: Mapped[str] = mapped_column(String(256))
+    contrasena_sha256: Mapped[str] = mapped_column(String(256))
+    renovacion: Mapped[date]
+    limite_citas_pendientes: Mapped[int] = mapped_column(default=0)
 
     # Columnas booleanas
-    autoriza_mensajes = Column(Boolean(), nullable=False, default=True)
-    enviar_boletin = Column(Boolean(), nullable=False, default=False)
-    es_adulto_mayor = Column(Boolean(), nullable=False, default=False)
-    es_mujer = Column(Boolean(), nullable=False, default=False)
-    es_identidad = Column(Boolean(), nullable=False, default=False)
-    es_discapacidad = Column(Boolean(), nullable=False, default=False)
-    es_personal_interno = Column(Boolean(), nullable=False, default=False)
+    autoriza_mensajes: Mapped[bool] = mapped_column(default=True)
+    enviar_boletin: Mapped[bool] = mapped_column(default=False)
+    es_adulto_mayor: Mapped[bool] = mapped_column(default=False)
+    es_mujer: Mapped[bool] = mapped_column(default=False)
+    es_identidad: Mapped[bool] = mapped_column(default=False)
+    es_discapacidad: Mapped[bool] = mapped_column(default=False)
+    es_personal_interno: Mapped[bool] = mapped_column(default=False)
 
     # Hijos
-    cit_citas = relationship("CitCita", back_populates="cit_cliente")
-    cit_clientes_recuperaciones = relationship("CitClienteRecuperacion", back_populates="cit_cliente")
+    cit_citas: Mapped[List["CitCita"]] = relationship("CitCita", back_populates="cit_cliente")
+    cit_clientes_recuperaciones: Mapped[List["CitClienteRecuperacion"]] = relationship(
+        "CitClienteRecuperacion", back_populates="cit_cliente"
+    )
 
     @property
     def nombre(self):

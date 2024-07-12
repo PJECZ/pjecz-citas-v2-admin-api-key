@@ -1,8 +1,9 @@
 """
 Cit Oficinas Servicios, modelos
 """
-from sqlalchemy import Column, ForeignKey, Integer, String
-from sqlalchemy.orm import relationship
+
+from sqlalchemy import ForeignKey, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from lib.database import Base
 from lib.universal_mixin import UniversalMixin
@@ -15,16 +16,16 @@ class CitOficinaServicio(Base, UniversalMixin):
     __tablename__ = "cit_oficinas_servicios"
 
     # Clave primaria
-    id = Column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
 
     # Claves foráneas
-    cit_servicio_id = Column(Integer, ForeignKey("cit_servicios.id"), index=True, nullable=False)
-    cit_servicio = relationship("CitServicio", back_populates="cit_oficinas_servicios")
-    oficina_id = Column(Integer, ForeignKey("oficinas.id"), index=True, nullable=False)
-    oficina = relationship("Oficina", back_populates="cit_oficinas_servicios")
+    cit_servicio_id: Mapped[int] = mapped_column(ForeignKey("cit_servicios.id"), index=True)
+    cit_servicio: Mapped["CitServicio"] = relationship(back_populates="cit_oficinas_servicios")
+    oficina_id: Mapped[int] = mapped_column(ForeignKey("oficinas.id"), index=True)
+    oficina: Mapped["Oficina"] = relationship(back_populates="cit_oficinas_servicios")
 
     # Columnas
-    descripcion = Column(String(256), nullable=False)
+    descripcion: Mapped[str] = mapped_column(String(256))
 
     @property
     def cit_servicio_clave(self):

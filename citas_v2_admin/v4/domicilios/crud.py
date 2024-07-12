@@ -24,7 +24,7 @@ def get_domicilios(
     elif distrito_clave is not None:
         distrito = get_distrito_with_clave(database, distrito_clave)
         consulta = consulta.filter_by(distrito_id=distrito.id)
-    return consulta.filter_by(estatus="A").order_by(Domicilio.id)
+    return consulta.filter(Domicilio.estatus == "A").order_by(Domicilio.id)
 
 
 def get_domicilio(database: Session, domicilio_id: int) -> Domicilio:

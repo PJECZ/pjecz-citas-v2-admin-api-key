@@ -39,7 +39,7 @@ def get_oficinas(
         consulta = consulta.filter_by(puede_agendar_citas=puede_agendar_citas)
     if puede_enviar_qr is not None:
         consulta = consulta.filter_by(puede_enviar_qr=puede_enviar_qr)
-    return consulta.filter_by(estatus="A").order_by(Oficina.clave)
+    return consulta.filter(Oficina.estatus == "A").order_by(Oficina.clave)
 
 
 def get_oficina(database: Session, oficina_id: int) -> Oficina:

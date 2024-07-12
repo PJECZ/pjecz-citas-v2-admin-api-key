@@ -1,12 +1,12 @@
 """
 Cit Citas, modelos
 """
-from collections import OrderedDict
+
 from datetime import datetime
 
 import pytz
-from sqlalchemy import Boolean, Column, DateTime, Enum, ForeignKey, Integer, String, Text
-from sqlalchemy.orm import relationship
+from sqlalchemy import Enum, ForeignKey, String, Text
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from lib.database import Base
 from lib.universal_mixin import UniversalMixin
@@ -15,37 +15,35 @@ from lib.universal_mixin import UniversalMixin
 class CitCita(Base, UniversalMixin):
     """CitCita"""
 
-    ESTADOS = OrderedDict(
-        [
-            ("ASISTIO", "Asistió"),
-            ("CANCELO", "Canceló"),
-            ("INASISTENCIA", "Inasistencia"),
-            ("PENDIENTE", "Pendiente"),
-        ]
-    )
+    ESTADOS = {
+        "ASISTIO": "Asistió",
+        "CANCELO": "Canceló",
+        "INASISTENCIA": "Inasistencia",
+        "PENDIENTE": "Pendiente",
+    }
 
     # Nombre de la tabla
     __tablename__ = "cit_citas"
 
     # Clave primaria
-    id = Column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
 
     # Claves foráneas
-    cit_cliente_id = Column(Integer, ForeignKey("cit_clientes.id"), index=True, nullable=False)
-    cit_cliente = relationship("CitCliente", back_populates="cit_citas")
-    cit_servicio_id = Column(Integer, ForeignKey("cit_servicios.id"), index=True, nullable=False)
-    cit_servicio = relationship("CitServicio", back_populates="cit_citas")
-    oficina_id = Column(Integer, ForeignKey("oficinas.id"), index=True, nullable=False)
-    oficina = relationship("Oficina", back_populates="cit_citas")
+    cit_cliente_id: Mapped[int] = mapped_column(ForeignKey("cit_clientes.id"), index=True)
+    cit_cliente: Mapped["CitCliente"] = relationship(back_populates="cit_citas")
+    cit_servicio_id: Mapped[int] = mapped_column(ForeignKey("cit_servicios.id"), index=True)
+    cit_servicio: Mapped["CitServicio"] = relationship(back_populates="cit_citas")
+    oficina_id: Mapped[int] = mapped_column(ForeignKey("oficinas.id"), index=True)
+    oficina: Mapped["Oficina"] = relationship(back_populates="cit_citas")
 
     # Columnas
-    inicio = Column(DateTime(), nullable=False)
-    termino = Column(DateTime(), nullable=False)
-    notas = Column(Text(), nullable=False)
-    estado = Column(Enum(*ESTADOS, name="estados", native_enum=False))
-    asistencia = Column(Boolean, nullable=False, default=False)
-    codigo_asistencia = Column(String(4))
-    cancelar_antes = Column(DateTime())
+    inicio: Mapped[datetime]
+    termino: Mapped[datetime]
+    notas: Mapped[str] = mapped_column(Text())
+    estado: Mapped[str] = mapped_column(Enum(*ESTADOS, name="estados", native_enum=False), index=True)
+    asistencia: Mapped[bool] = mapped_column(default=False)
+    codigo_asistencia: Mapped[str] = mapped_column(String(4))
+    cancelar_antes: Mapped[datetime]
 
     @property
     def cit_cliente_nombre(self):
@@ -73,17 +71,6 @@ class CitCita(Base, UniversalMixin):
         return self.cit_servicio.descripcion
 
     @property
-    def puede_cancelarse(self):
-        """Puede cancelarse esta cita?"""
-        if self.estado != "PENDIENTE":
-            return False
-        ahora = datetime.now(tz=pytz.timezone("America/Mexico_City"))
-        ahora_sin_tz = ahora.replace(tzinfo=None)
-        if self.cancelar_antes is None:
-            return ahora_sin_tz < self.inicio
-        return ahora_sin_tz < self.cancelar_antes
-
-    @property
     def oficina_clave(self):
         """Clave de la oficina"""
         return self.oficina.clave
@@ -97,6 +84,17 @@ class CitCita(Base, UniversalMixin):
     def oficina_descripcion_corta(self):
         """Descripcion corta de la oficina"""
         return self.oficina.descripcion_corta
+
+    @property
+    def puede_cancelarse(self):
+        """¿Puede cancelarse esta cita?"""
+        if self.estado != "PENDIENTE":
+            return False
+        ahora = datetime.now(tz=pytz.timezone("America/Mexico_City"))
+        ahora_sin_tz = ahora.replace(tzinfo=None)
+        if self.cancelar_antes is None:
+            return ahora_sin_tz < self.inicio
+        return ahora_sin_tz < self.cancelar_antes
 
     def __repr__(self):
         """Representación"""

@@ -50,7 +50,9 @@ def get_cit_clientes_registros(
         desde_dt = datetime(year=creado_desde.year, month=creado_desde.month, day=creado_desde.day, hour=0, minute=0, second=0)
         consulta = consulta.filter(CitClienteRegistro.creado >= desde_dt)
     if creado is None and creado_hasta is not None:
-        hasta_dt = datetime(year=creado_hasta.year, month=creado_hasta.month, day=creado_hasta.day, hour=23, minute=59, second=59)
+        hasta_dt = datetime(
+            year=creado_hasta.year, month=creado_hasta.month, day=creado_hasta.day, hour=23, minute=59, second=59
+        )
         consulta = consulta.filter(CitClienteRegistro.creado <= hasta_dt)
 
     # Filtrar por fragmento de CURP
@@ -88,7 +90,7 @@ def get_cit_clientes_registros(
         consulta = consulta.filter(CitClienteRegistro.ya_registrado == ya_registrado)
 
     # Entregar
-    return consulta.filter_by(estatus="A").order_by(CitClienteRegistro.id)
+    return consulta.filter(CitClienteRegistro.estatus == "A").order_by(CitClienteRegistro.id)
 
 
 def get_cit_cliente_registro(database: Session, cit_cliente_registro_id: int) -> CitClienteRegistro:
@@ -127,10 +129,14 @@ def get_cit_clientes_creados_por_dia(
         consulta = consulta.filter(CitClienteRegistro.creado >= desde_dt).filter(CitClienteRegistro.creado <= hasta_dt)
     else:
         if creado_desde is not None:
-            desde_dt = datetime(year=creado_desde.year, month=creado_desde.month, day=creado_desde.day, hour=0, minute=0, second=0)
+            desde_dt = datetime(
+                year=creado_desde.year, month=creado_desde.month, day=creado_desde.day, hour=0, minute=0, second=0
+            )
             consulta = consulta.filter(CitClienteRegistro.creado >= desde_dt)
         if creado_hasta is not None:
-            hasta_dt = datetime(year=creado_hasta.year, month=creado_hasta.month, day=creado_hasta.day, hour=23, minute=59, second=59)
+            hasta_dt = datetime(
+                year=creado_hasta.year, month=creado_hasta.month, day=creado_hasta.day, hour=23, minute=59, second=59
+            )
             consulta = consulta.filter(CitClienteRegistro.creado <= hasta_dt)
 
     # Agrupar por creado y entregar

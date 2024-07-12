@@ -29,7 +29,7 @@ def get_boletines(
         consulta = consulta.filter(Boletin.envio_programado >= envio_programado_desde)
     if envio_programado_hasta is not None:
         consulta = consulta.filter(Boletin.envio_programado <= envio_programado_hasta)
-    return consulta.filter_by(estatus="A").order_by(Boletin.envio_programado)
+    return consulta.filter(Boletin.estatus == "A").order_by(Boletin.envio_programado)
 
 
 def get_boletin(database: Session, boletin_id: int) -> Boletin:
@@ -39,33 +39,4 @@ def get_boletin(database: Session, boletin_id: int) -> Boletin:
         raise MyNotExistsError("No existe ese boletin")
     if boletin.estatus != "A":
         raise MyIsDeletedError("No es activo ese boletin, está eliminado")
-    return boletin
-
-
-def create_boletin(database: Session, boletin: Boletin) -> Boletin:
-    """Crear una boletin"""
-    database.add(boletin)
-    database.commit()
-    database.refresh(boletin)
-    return boletin
-
-
-def update_boletin(database: Session, boletin_id: int, boletin_in: Boletin) -> Boletin:
-    """Actualizar un boletin"""
-    boletin = get_boletin(database, boletin_id)
-    boletin.asunto = boletin_in.asunto
-    boletin.contenido = boletin_in.contenido
-    boletin.estado = boletin_in.estado
-    boletin.envio_programado = boletin_in.envio_programado
-    boletin.puntero = boletin_in.puntero
-    boletin.termino_programado = boletin_in.termino_programado
-    database.commit()
-    return boletin
-
-
-def delete_boletin(database: Session, boletin_id: int) -> Boletin:
-    """Eliminar una boletin"""
-    boletin = get_boletin(database, boletin_id)
-    boletin.estatus = "B"
-    database.commit()
     return boletin

@@ -14,7 +14,7 @@ class TestCitClientesRegistros(unittest.TestCase):
     def test_get_cit_clientes_registros(self):
         """Test GET method for cit_clientes_registros"""
         response = requests.get(
-            f"{config['api_base_url']}/cit_clientes_registros",
+            url=f"{config['api_base_url']}/cit_clientes_registros",
             headers={"X-Api-Key": config["api_key"]},
             timeout=config["timeout"],
         )

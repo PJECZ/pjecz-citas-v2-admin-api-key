@@ -45,7 +45,9 @@ def get_cit_clientes_recuperaciones(
         desde_dt = datetime(year=creado_desde.year, month=creado_desde.month, day=creado_desde.day, hour=0, minute=0, second=0)
         consulta = consulta.filter(CitClienteRecuperacion.creado >= desde_dt)
     if creado is None and creado_hasta is not None:
-        hasta_dt = datetime(year=creado_hasta.year, month=creado_hasta.month, day=creado_hasta.day, hour=23, minute=59, second=59)
+        hasta_dt = datetime(
+            year=creado_hasta.year, month=creado_hasta.month, day=creado_hasta.day, hour=23, minute=59, second=59
+        )
         consulta = consulta.filter(CitClienteRecuperacion.creado <= hasta_dt)
 
     # Filtrar por ya recuperado
@@ -53,7 +55,7 @@ def get_cit_clientes_recuperaciones(
         consulta = consulta.filter(CitClienteRecuperacion.recuperado == ya_recuperado)
 
     # Entregar
-    return consulta.filter_by(estatus="A").order_by(CitClienteRecuperacion.id)
+    return consulta.filter(CitClienteRecuperacion.estatus == "A").order_by(CitClienteRecuperacion.id)
 
 
 def get_cit_cliente_recuperacion(database: Session, cit_cliente_recuperacion_id: int) -> CitClienteRecuperacion:

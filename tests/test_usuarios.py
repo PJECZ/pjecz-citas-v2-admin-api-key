@@ -14,7 +14,7 @@ class TestUsuarios(unittest.TestCase):
     def test_get_bitacoras(self):
         """Test GET method for bitacoras"""
         response = requests.get(
-            f"{config['api_base_url']}/bitacoras",
+            url=f"{config['api_base_url']}/bitacoras",
             headers={"X-Api-Key": config["api_key"]},
             timeout=config["timeout"],
         )
@@ -23,7 +23,7 @@ class TestUsuarios(unittest.TestCase):
     def test_get_bitacoras_with_modulo_nombre(self):
         """Test GET method for bitacoras with modulo_nombre USUARIOS"""
         response = requests.get(
-            f"{config['api_base_url']}/bitacoras",
+            url=f"{config['api_base_url']}/bitacoras",
             headers={"X-Api-Key": config["api_key"]},
             timeout=config["timeout"],
             params={"modulo_nombre": "USUARIOS"},
@@ -37,7 +37,7 @@ class TestUsuarios(unittest.TestCase):
     def test_get_entradas_salidas(self):
         """Test GET method for entradas_salidas"""
         response = requests.get(
-            f"{config['api_base_url']}/entradas_salidas",
+            url=f"{config['api_base_url']}/entradas_salidas",
             headers={"X-Api-Key": config["api_key"]},
             timeout=config["timeout"],
         )
@@ -46,7 +46,7 @@ class TestUsuarios(unittest.TestCase):
     def test_get_modulos(self):
         """Test GET method for modulos"""
         response = requests.get(
-            f"{config['api_base_url']}/modulos",
+            url=f"{config['api_base_url']}/modulos",
             headers={"X-Api-Key": config["api_key"]},
             timeout=config["timeout"],
         )

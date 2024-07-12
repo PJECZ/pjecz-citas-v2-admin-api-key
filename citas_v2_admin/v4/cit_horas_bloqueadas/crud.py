@@ -28,7 +28,7 @@ def get_cit_horas_bloqueadas(
     consulta = consulta.filter_by(oficina=oficina)
 
     # Entregar
-    return consulta.filter_by(estatus="A").order_by(CitHoraBloqueada.id.desc())
+    return consulta.filter(CitHoraBloqueada.estatus == "A").order_by(CitHoraBloqueada.id.desc())
 
 
 def get_cit_hora_bloqueada(database: Session, cit_hora_bloqueada_id: int) -> CitHoraBloqueada:

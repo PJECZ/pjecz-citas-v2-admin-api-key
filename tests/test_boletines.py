@@ -14,7 +14,7 @@ class TestBoletines(unittest.TestCase):
     def test_get_boletines(self):
         """Test GET method for boletines"""
         response = requests.get(
-            f"{config['api_base_url']}/boletines",
+            url=f"{config['api_base_url']}/boletines",
             headers={"X-Api-Key": config["api_key"]},
             timeout=config["timeout"],
         )
@@ -23,7 +23,7 @@ class TestBoletines(unittest.TestCase):
     def test_get_boletines_with_estado(self):
         """Test GET method for boletines with estado BORRADOR"""
         response = requests.get(
-            f"{config['api_base_url']}/boletines",
+            url=f"{config['api_base_url']}/boletines",
             headers={"X-Api-Key": config["api_key"]},
             timeout=config["timeout"],
             params={"estado": "BORRADOR"},

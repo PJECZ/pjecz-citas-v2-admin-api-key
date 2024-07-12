@@ -33,7 +33,7 @@ def get_bitacoras(
     elif usuario_email is not None:
         usuario = get_usuario_with_email(database, usuario_email)
         consulta = consulta.filter_by(usuario_id=usuario.id)
-    return consulta.filter_by(estatus="A").order_by(Bitacora.id.desc())
+    return consulta.filter(Bitacora.estatus == "A").order_by(Bitacora.id.desc())
 
 
 def get_bitacora(database: Session, bitacora_id: int) -> Bitacora:

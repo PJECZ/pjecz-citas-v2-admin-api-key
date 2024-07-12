@@ -56,7 +56,7 @@ def get_usuarios(
     elif oficina_clave is not None:
         oficina = get_oficina_with_clave(database, oficina_clave)
         consulta = consulta.filter_by(oficina_id=oficina.id)
-    return consulta.filter_by(estatus="A").order_by(Usuario.email)
+    return consulta.filter(Usuario.estatus == "A").order_by(Usuario.email)
 
 
 def get_usuario(database: Session, usuario_id: int) -> Usuario:

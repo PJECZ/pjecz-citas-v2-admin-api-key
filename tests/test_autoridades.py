@@ -14,7 +14,7 @@ class TestAutoridades(unittest.TestCase):
     def test_get_autoridades(self):
         """Test GET method for autoridades"""
         response = requests.get(
-            f"{config['api_base_url']}/autoridades",
+            url=f"{config['api_base_url']}/autoridades",
             headers={"X-Api-Key": config["api_key"]},
             timeout=config["timeout"],
         )
@@ -23,7 +23,7 @@ class TestAutoridades(unittest.TestCase):
     def test_get_autoridades_by_es_jurisdiccional(self):
         """Test GET method for autoridades by es_jurisdiccional"""
         response = requests.get(
-            f"{config['api_base_url']}/autoridades",
+            url=f"{config['api_base_url']}/autoridades",
             headers={"X-Api-Key": config["api_key"]},
             timeout=config["timeout"],
             params={"es_jurisdiccional": 1},
