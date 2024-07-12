@@ -4,6 +4,7 @@ Cit Citas, modelos
 
 from datetime import datetime
 
+import pytz
 from sqlalchemy import Enum, ForeignKey, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -83,6 +84,17 @@ class CitCita(Base, UniversalMixin):
     def oficina_descripcion_corta(self):
         """Descripcion corta de la oficina"""
         return self.oficina.descripcion_corta
+
+    @property
+    def puede_cancelarse(self):
+        """¿Puede cancelarse esta cita?"""
+        if self.estado != "PENDIENTE":
+            return False
+        ahora = datetime.now(tz=pytz.timezone("America/Mexico_City"))
+        ahora_sin_tz = ahora.replace(tzinfo=None)
+        if self.cancelar_antes is None:
+            return ahora_sin_tz < self.inicio
+        return ahora_sin_tz < self.cancelar_antes
 
     def __repr__(self):
         """Representación"""
